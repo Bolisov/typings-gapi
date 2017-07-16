@@ -3,7 +3,7 @@
     "main": "gapi.client.mirror.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "API for interacting with Glass users via the timeline.",
+    "description": "Interacts with Glass users via the timeline.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

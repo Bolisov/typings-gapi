@@ -3,7 +3,7 @@
     "main": "gapi.client.youtubereporting.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Schedules reporting jobs and downloads the resulting bulk data reports about YouTube channels, videos, etc. in the form of CSV files.",
+    "description": "Schedules reporting jobs containing your YouTube Analytics data and downloads the resulting bulk data reports in the form of CSV files.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

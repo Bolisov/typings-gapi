@@ -22,6 +22,8 @@ declare module gapi.client.civicinfo {
     interface AdministrativeBody {
         // A URL provided by this administrative body for information on absentee voting.
         absenteeVotingInfoUrl?: string,
+        // 
+        addressLines?: string[],        
         // A URL provided by this administrative body to give contest information to the voter.
         ballotInfoUrl?: string,
         // The mailing address of this administrative body.
@@ -55,7 +57,7 @@ declare module gapi.client.civicinfo {
         channels?: Channel[],        
         // The email address for the candidate's campaign.
         email?: string,
-        // The candidate's name.
+        // The candidate's name. If this is a joint ticket it will indicate the name of the candidate at the top of a ticket followed by a / and that name of candidate at the bottom of the ticket. e.g. "Mitt Romney / Paul Ryan"
         name?: string,
         // The order the candidate appears on the ballot for this contest.
         orderOnBallot?: string,
@@ -95,7 +97,7 @@ declare module gapi.client.civicinfo {
         office?: string,
         // If this is a partisan election, the name of the party it is for.
         primaryParty?: string,
-        // The set of ballot responses for the referendum. A ballot response represents a line on the ballot. Common examples might include "yes" or "no" for referenda, or a judge's name for a retention contest. This field is only populated for contests of type 'Referendum'.
+        // The set of ballot responses for the referendum. A ballot response represents a line on the ballot. Common examples might include "yes" or "no" for referenda. This field is only populated for contests of type 'Referendum'.
         referendumBallotResponses?: string[],        
         // Specifies a short summary of the referendum that is typically on the ballot below the title but above the text. This field is only populated for contests of type 'Referendum'.
         referendumBrief?: string,
@@ -121,8 +123,23 @@ declare module gapi.client.civicinfo {
         sources?: Source[],        
         // "Yes" or "No" depending on whether this a contest being held outside the normal election cycle.
         special?: string,
-        // The type of contest. Usually this will be 'General', 'Primary', or 'Run-off' for contests with candidates. For referenda this will be 'Referendum'.
+        // The type of contest. Usually this will be 'General', 'Primary', or 'Run-off' for contests with candidates. For referenda this will be 'Referendum'. For Retention contests this will typically be 'Retention'.
         type?: string,
+    }
+    
+    interface ContextParams {
+        // 
+        clientProfile?: string,
+    }
+    
+    interface DivisionRepresentativeInfoRequest {
+        // 
+        contextParams?: ContextParams,
+    }
+    
+    interface DivisionSearchRequest {
+        // 
+        contextParams?: ContextParams,
     }
     
     interface DivisionSearchResponse {
@@ -165,6 +182,11 @@ declare module gapi.client.civicinfo {
         title?: string,
     }
     
+    interface ElectionsQueryRequest {
+        // 
+        contextParams?: ContextParams,
+    }
+    
     interface ElectionsQueryResponse {
         // A list of available elections
         elections?: Election[],        
@@ -175,6 +197,8 @@ declare module gapi.client.civicinfo {
     interface ElectoralDistrict {
         // An identifier for this district, relative to its scope. For example, the 34th State Senate district would have id "34" and a scope of stateUpper.
         id?: string,
+        // 
+        kgForeignKey?: string,
         // The name of the district.
         name?: string,
         // The geographic scope of this district. If unspecified the district's geography is not known. One of: national, statewide, congressional, stateUpper, stateLower, countywide, judicial, schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward, special
@@ -249,6 +273,71 @@ declare module gapi.client.civicinfo {
         voterServices?: string,
     }
     
+    interface PostalAddress {
+        // 
+        addressLines?: string[],        
+        // 
+        administrativeAreaName?: string,
+        // 
+        countryName?: string,
+        // 
+        countryNameCode?: string,
+        // 
+        dependentLocalityName?: string,
+        // 
+        dependentThoroughfareLeadingType?: string,
+        // 
+        dependentThoroughfareName?: string,
+        // 
+        dependentThoroughfarePostDirection?: string,
+        // 
+        dependentThoroughfarePreDirection?: string,
+        // 
+        dependentThoroughfareTrailingType?: string,
+        // 
+        dependentThoroughfaresConnector?: string,
+        // 
+        dependentThoroughfaresIndicator?: string,
+        // 
+        dependentThoroughfaresType?: string,
+        // 
+        firmName?: string,
+        // 
+        isDisputed?: boolean,
+        // 
+        languageCode?: string,
+        // 
+        localityName?: string,
+        // 
+        postBoxNumber?: string,
+        // 
+        postalCodeNumber?: string,
+        // 
+        postalCodeNumberExtension?: string,
+        // 
+        premiseName?: string,
+        // 
+        recipientName?: string,
+        // 
+        sortingCode?: string,
+        // 
+        subAdministrativeAreaName?: string,
+        // 
+        subPremiseName?: string,
+        // 
+        thoroughfareLeadingType?: string,
+        // 
+        thoroughfareName?: string,
+        // 
+        thoroughfareNumber?: string,
+        // 
+        thoroughfarePostDirection?: string,
+        // 
+        thoroughfarePreDirection?: string,
+        // 
+        thoroughfareTrailingType?: string,
+    }
+    
     interface RepresentativeInfoData {
         // Political geographic divisions that contain the requested address.
         divisions?: any,
@@ -256,6 +345,11 @@ declare module gapi.client.civicinfo {
         offices?: Office[],        
         // Officials holding the offices listed above. Will only be present if includeOffices was true in the request.
         officials?: Official[],        
+    }
+    
+    interface RepresentativeInfoRequest {
+        // 
+        contextParams?: ContextParams,
     }
     
     interface RepresentativeInfoResponse {
@@ -295,6 +389,13 @@ declare module gapi.client.civicinfo {
         official?: boolean,
     }
     
+    interface VoterInfoRequest {
+        // 
+        contextParams?: ContextParams,
+        // 
+        voterInfoSegmentResult?: VoterInfoSegmentResult,
+    }
+    
     interface VoterInfoResponse {
         // Contests that will appear on the voter's ballot.
         contests?: Contest[],        
@@ -320,9 +421,34 @@ declare module gapi.client.civicinfo {
         state?: AdministrationRegion[],        
     }
     
+    interface VoterInfoSegmentResult {
+        // 
+        generatedMillis?: string,
+        // 
+        postalAddress?: PostalAddress,
+        // 
+        request?: VoterInfoRequest,
+        // 
+        response?: VoterInfoResponse,
+    }
+    
     interface DivisionsResource {
         // Searches for political divisions by their natural name or OCD ID.
         search (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The search query. Queries can cover any parts of a OCD ID or a human readable division name. All words given in the query are treated as required patterns. In addition to that, most query operators of the Apache Lucene library are supported. See http://lucene.apache.org/core/2_9_4/queryparsersyntax.html
             query?: string,
         }) : gapi.client.Request<DivisionSearchResponse>;        
@@ -333,16 +459,46 @@ declare module gapi.client.civicinfo {
     interface ElectionsResource {
         // List of available elections to query.
         electionQuery (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
         }) : gapi.client.Request<ElectionsQueryResponse>;        
         
         // Looks up information relevant to a voter based on the voter's registered address.
         voterInfoQuery (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The registered address of the voter to look up.
             address: string,
             // The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/elections
             electionId?: string,
             // If set to true, only data from official state sources will be returned.
             officialOnly?: boolean,
+            // If set to true, the query will return the success codeand include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.
+            returnAllAvailableData?: boolean,
         }) : gapi.client.Request<VoterInfoResponse>;        
         
     }
@@ -351,6 +507,20 @@ declare module gapi.client.civicinfo {
     interface RepresentativesResource {
         // Looks up political geography and representative information for a single address.
         representativeInfoByAddress (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The address to look up. May only be specified if the field ocdId is not given in the URL.
             address?: string,
             // Whether to return information about offices and officials. If false, only the top-level district information will be returned.
@@ -363,6 +533,20 @@ declare module gapi.client.civicinfo {
         
         // Looks up representative information for a single geographic division.
         representativeInfoByDivision (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // A list of office levels to filter by. Only offices that serve at least one of these levels will be returned. Divisions that don't contain a matching office will not be returned.
             levels?: string,
             // The Open Civic Data division identifier of the division to look up.

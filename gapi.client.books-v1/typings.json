@@ -3,7 +3,7 @@
     "main": "gapi.client.books.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Lets you search for books and manage your Google Books library.",
+    "description": "Searches for books and manages your Google Books library.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

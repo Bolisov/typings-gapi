@@ -1,5 +1,5 @@
 # Typescript typings for CustomSearch API
-Lets you search over a website or collection of websites
+Searches over a website or collection of websites
 For detailed description please check [documentation](https://developers.google.com/custom-search/v1/using_rest).
 
 ## Installing
@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('customsearch', 'v1', () => {
     // now we can use gapi.client.customsearch
     // ... 
-});
-```
+});```
 
 
 
 After that you can use CustomSearch API resources:
 
 ```typescript
-gapi.client.customsearch.cse.<method name>({ /* method parameters */ })
+gapi.client.cse.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

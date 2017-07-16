@@ -1,5 +1,5 @@
 # Typescript typings for YouTube Analytics API
-Retrieves your YouTube Analytics reports.
+Retrieves your YouTube Analytics data.
 For detailed description please check [documentation](http://developers.google.com/youtube/analytics/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('youtubeAnalytics', 'v1beta1', () => {
     // now we can use gapi.client.youtubeAnalytics
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -73,18 +72,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use YouTube Analytics API resources:
 
 ```typescript
-gapi.client.youtubeAnalytics.batchReportDefinitions.<method name>({ /* method parameters */ })
+gapi.client.groupItems.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtubeAnalytics.batchReports.<method name>({ /* method parameters */ })
+gapi.client.groups.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtubeAnalytics.groupItems.<method name>({ /* method parameters */ })
-    .then(response => { /* handling response */ });
-
-gapi.client.youtubeAnalytics.groups.<method name>({ /* method parameters */ })
-    .then(response => { /* handling response */ });
-
-gapi.client.youtubeAnalytics.reports.<method name>({ /* method parameters */ })
+gapi.client.reports.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

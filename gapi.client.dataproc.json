@@ -1,7 +1,7 @@
 {
     "versions": {
         "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dataproc-v1",
-        "1-alpha1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dataproc-v1alpha1",
-        "1-beta1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dataproc-v1beta1"
+        "1-beta1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dataproc-v1beta1",
+        "1-beta2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dataproc-v1beta2"
     }
 }

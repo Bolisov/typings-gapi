@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('blogger', 'v3', () => {
     // now we can use gapi.client.blogger
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,27 +63,27 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Blogger API resources:
 
 ```typescript
-gapi.client.blogger.blogUserInfos.<method name>({ /* method parameters */ })
+gapi.client.blogUserInfos.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.blogs.<method name>({ /* method parameters */ })
+gapi.client.blogs.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.comments.<method name>({ /* method parameters */ })
+gapi.client.comments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.pageViews.<method name>({ /* method parameters */ })
+gapi.client.pageViews.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.pages.<method name>({ /* method parameters */ })
+gapi.client.pages.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.postUserInfos.<method name>({ /* method parameters */ })
+gapi.client.postUserInfos.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.posts.<method name>({ /* method parameters */ })
+gapi.client.posts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.blogger.users.<method name>({ /* method parameters */ })
+gapi.client.users.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

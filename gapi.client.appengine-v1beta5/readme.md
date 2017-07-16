@@ -1,5 +1,5 @@
 # Typescript typings for Google App Engine Admin API
-Provisions and manages App Engine applications.
+The App Engine Admin API enables developers to provision and manage their App Engine applications.
 For detailed description please check [documentation](https://cloud.google.com/appengine/docs/admin-api/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('appengine', 'v1beta5', () => {
     // now we can use gapi.client.appengine
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,8 +42,14 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
+        // View your data across Google Cloud Platform services
+        'https://www.googleapis.com/auth/cloud-platform.read-only',
+    
         // View and manage your data across Google Cloud Platform services
         'https://www.googleapis.com/auth/cloud-platform',
+    
+        // View and manage your applications deployed on Google App Engine
+        'https://www.googleapis.com/auth/appengine.admin',
     ],
     immediate = true;
 // ...
@@ -61,6 +66,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google App Engine Admin API resources:
 
 ```typescript
-gapi.client.appengine.apps.<method name>({ /* method parameters */ })
+gapi.client.apps.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

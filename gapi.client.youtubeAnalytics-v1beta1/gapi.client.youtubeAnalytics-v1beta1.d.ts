@@ -6,60 +6,6 @@
 
 declare module gapi.client.youtubeAnalytics {
     
-    interface BatchReport {
-        // The ID that YouTube assigns and uses to uniquely identify the report.
-        id?: string,
-        // This value specifies the type of data of this item. For batch report the kind property value is youtubeAnalytics#batchReport.
-        kind?: string,
-        // Report outputs.
-        outputs?: {        
-            // Cloud storage URL to download this report. This URL is valid for 30 minutes.
-            downloadUrl?: string,
-            // Format of the output.
-            format?: string,
-            // Type of the output.
-            type?: string,
-        }[],        
-        // The ID of the the report definition.
-        reportId?: string,
-        // Period included in the report. For reports containing all entities endTime is not set. Both startTime and endTime are inclusive.
-        timeSpan?: {        
-            // End of the period included in the report. Inclusive. For reports containing all entities endTime is not set.
-            endTime?: string,
-            // Start of the period included in the report. Inclusive.
-            startTime?: string,
-        },        
-        // The time when the report was updated.
-        timeUpdated?: string,
-    }
-    
-    interface BatchReportDefinition {
-        // The ID that YouTube assigns and uses to uniquely identify the report definition.
-        id?: string,
-        // This value specifies the type of data of this item. For batch report definition the kind property value is youtubeAnalytics#batchReportDefinition.
-        kind?: string,
-        // Name of the report definition.
-        name?: string,
-        // Status of the report definition.
-        status?: string,
-        // Type of the report definition.
-        type?: string,
-    }
-    
-    interface BatchReportDefinitionList {
-        // A list of batchReportDefinition resources that match the request criteria.
-        items?: BatchReportDefinition[],        
-        // This value specifies the type of data included in the API response. For the list method, the kind property value is youtubeAnalytics#batchReportDefinitionList.
-        kind?: string,
-    }
-    
-    interface BatchReportList {
-        // A list of batchReport resources that match the request criteria.
-        items?: BatchReport[],        
-        // This value specifies the type of data included in the API response. For the list method, the kind property value is youtubeAnalytics#batchReportList.
-        kind?: string,
-    }
-    
     interface Group {
         // 
         contentDetails?: {        
@@ -137,31 +83,23 @@ declare module gapi.client.youtubeAnalytics {
         rows?: any[][],        
     }
     
-    interface BatchReportDefinitionsResource {
-        // Retrieves a list of available batch report definitions.
-        list (request: {        
-            // The onBehalfOfContentOwner parameter identifies the content owner that the user is acting on behalf of.
-            onBehalfOfContentOwner: string,
-        }) : gapi.client.Request<BatchReportDefinitionList>;        
-        
-    }
-    
-    
-    interface BatchReportsResource {
-        // Retrieves a list of processed batch reports.
-        list (request: {        
-            // The batchReportDefinitionId parameter specifies the ID of the batch reportort definition for which you are retrieving reports.
-            batchReportDefinitionId: string,
-            // The onBehalfOfContentOwner parameter identifies the content owner that the user is acting on behalf of.
-            onBehalfOfContentOwner: string,
-        }) : gapi.client.Request<BatchReportList>;        
-        
-    }
-    
-    
     interface GroupItemsResource {
         // Removes an item from a group.
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id parameter specifies the YouTube group item ID for the group that is being deleted.
             id: string,
             // Note: This parameter is intended exclusively for YouTube content partners.
@@ -172,6 +110,20 @@ declare module gapi.client.youtubeAnalytics {
         
         // Creates a group item.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Note: This parameter is intended exclusively for YouTube content partners.
             // 
             // The onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.
@@ -180,6 +132,20 @@ declare module gapi.client.youtubeAnalytics {
         
         // Returns a collection of group items that match the API request parameters.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id parameter specifies the unique ID of the group for which you want to retrieve group items.
             groupId: string,
             // Note: This parameter is intended exclusively for YouTube content partners.
@@ -194,6 +160,20 @@ declare module gapi.client.youtubeAnalytics {
     interface GroupsResource {
         // Deletes a group.
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id parameter specifies the YouTube group ID for the group that is being deleted.
             id: string,
             // Note: This parameter is intended exclusively for YouTube content partners.
@@ -204,6 +184,20 @@ declare module gapi.client.youtubeAnalytics {
         
         // Creates a group.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Note: This parameter is intended exclusively for YouTube content partners.
             // 
             // The onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.
@@ -212,6 +206,20 @@ declare module gapi.client.youtubeAnalytics {
         
         // Returns a collection of groups that match the API request parameters. For example, you can retrieve all groups that the authenticated user owns, or you can retrieve one or more groups by their unique IDs.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id parameter specifies a comma-separated list of the YouTube group ID(s) for the resource(s) that are being retrieved. In a group resource, the id property specifies the group's YouTube group ID.
             id?: string,
             // Set this parameter's value to true to instruct the API to only return groups owned by the authenticated user.
@@ -226,6 +234,20 @@ declare module gapi.client.youtubeAnalytics {
         
         // Modifies a group. For example, you could change a group's title.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Note: This parameter is intended exclusively for YouTube content partners.
             // 
             // The onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.
@@ -238,6 +260,20 @@ declare module gapi.client.youtubeAnalytics {
     interface ReportsResource {
         // Retrieve your YouTube Analytics reports.
         query (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The currency to which financial metrics should be converted. The default is US Dollar (USD). If the result contains no financial metrics, this flag will be ignored. Responds with an error if the specified currency is not recognized.
             currency?: string,
             // A comma-separated list of YouTube Analytics dimensions, such as views or ageGroup,gender. See the Available Reports document for a list of the reports that you can retrieve and the dimensions used for those reports. Also see the Dimensions document for definitions of those dimensions.
@@ -250,6 +286,8 @@ declare module gapi.client.youtubeAnalytics {
             // - To request data for a YouTube user, set the ids parameter value to channel==CHANNEL_ID, where CHANNEL_ID specifies the unique YouTube channel ID.
             // - To request data for a YouTube CMS content owner, set the ids parameter value to contentOwner==OWNER_NAME, where OWNER_NAME is the CMS name of the content owner.
             ids: string,
+            // If set to true historical data (i.e. channel data from before the linking of the channel to the content owner) will be retrieved.
+            include-historical-channel-data?: boolean,
             // The maximum number of rows to include in the response.
             max-results?: number,
             // A comma-separated list of YouTube Analytics metrics, such as views or likes,dislikes. See the Available Reports document for a list of the reports that you can retrieve and the metrics available in each report, and see the Metrics document for definitions of those metrics.
@@ -267,10 +305,6 @@ declare module gapi.client.youtubeAnalytics {
 }
 
 declare module gapi.client.youtubeAnalytics {
-    var batchReportDefinitions: gapi.client.youtubeAnalytics.BatchReportDefinitionsResource; 
-    
-    var batchReports: gapi.client.youtubeAnalytics.BatchReportsResource; 
-    
     var groupItems: gapi.client.youtubeAnalytics.GroupItemsResource; 
     
     var groups: gapi.client.youtubeAnalytics.GroupsResource; 

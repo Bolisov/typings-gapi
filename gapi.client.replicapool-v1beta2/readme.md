@@ -1,5 +1,5 @@
 # Typescript typings for Google Compute Engine Instance Group Manager API
-The Google Compute Engine Instance Group Manager API provides groups of homogenous Compute Engine Instances.
+[Deprecated. Please use Instance Group Manager in Compute API] Provides groups of homogenous Compute Engine instances.
 For detailed description please check [documentation](https://developers.google.com/compute/docs/instance-groups/manager/v1beta2).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('replicapool', 'v1beta2', () => {
     // now we can use gapi.client.replicapool
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,9 +69,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Compute Engine Instance Group Manager API resources:
 
 ```typescript
-gapi.client.replicapool.instanceGroupManagers.<method name>({ /* method parameters */ })
+gapi.client.instanceGroupManagers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.replicapool.zoneOperations.<method name>({ /* method parameters */ })
+gapi.client.zoneOperations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('cloudmonitoring', 'v2beta2', () => {
     // now we can use gapi.client.cloudmonitoring
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,12 +63,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Cloud Monitoring API resources:
 
 ```typescript
-gapi.client.cloudmonitoring.metricDescriptors.<method name>({ /* method parameters */ })
+gapi.client.metricDescriptors.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.cloudmonitoring.timeseries.<method name>({ /* method parameters */ })
+gapi.client.timeseries.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.cloudmonitoring.timeseriesDescriptors.<method name>({ /* method parameters */ })
+gapi.client.timeseriesDescriptors.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

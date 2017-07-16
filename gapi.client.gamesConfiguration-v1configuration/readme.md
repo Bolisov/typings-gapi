@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('gamesConfiguration', 'v1configuration', () => {
     // now we can use gapi.client.gamesConfiguration
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,12 +60,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Play Game Services Publishing API resources:
 
 ```typescript
-gapi.client.gamesConfiguration.achievementConfigurations.<method name>({ /* method parameters */ })
+gapi.client.achievementConfigurations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.gamesConfiguration.imageConfigurations.<method name>({ /* method parameters */ })
+gapi.client.imageConfigurations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.gamesConfiguration.leaderboardConfigurations.<method name>({ /* method parameters */ })
+gapi.client.leaderboardConfigurations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

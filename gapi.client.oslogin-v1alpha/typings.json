@@ -1,0 +1,14 @@
+{
+    "name": "oslogin",
+    "main": "gapi.client.oslogin.d.ts",
+    "version": "1-alpha",
+    "author": "Bolisov Alexey",
+    "description": "A Google Cloud API for managing OS login configuration for Directory API users.",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

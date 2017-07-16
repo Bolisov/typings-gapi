@@ -3,7 +3,7 @@
     "main": "gapi.client.clouddebugger.d.ts",
     "version": "2",
     "author": "Bolisov Alexey",
-    "description": "Examines the call stack and variables of a running application without stopping or slowing it down.",
+    "description": "Examines the call stack and variables of a running application without stopping or slowing it down.\n",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

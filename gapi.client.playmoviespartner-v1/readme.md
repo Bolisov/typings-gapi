@@ -1,5 +1,5 @@
 # Typescript typings for Google Play Movies Partner API
-Lets Google Play Movies Partners get the delivery status of their titles.
+Gets the delivery status of titles for Google Play Movies Partners.
 For detailed description please check [documentation](https://developers.google.com/playmoviespartner/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('playmoviespartner', 'v1', () => {
     // now we can use gapi.client.playmoviespartner
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,6 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Play Movies Partner API resources:
 
 ```typescript
-gapi.client.playmoviespartner.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

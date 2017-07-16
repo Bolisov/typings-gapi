@@ -1,5 +1,5 @@
 # Typescript typings for Google Compute Engine Instance Group Updater API
-Updates groups of Compute Engine instances.
+[Deprecated. Please use compute.instanceGroupManagers.update method. replicapoolupdater API will be disabled after December 30th, 2016] Updates groups of Compute Engine instances.
 For detailed description please check [documentation](https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_service).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('replicapoolupdater', 'v1beta1', () => {
     // now we can use gapi.client.replicapoolupdater
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,9 +69,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Compute Engine Instance Group Updater API resources:
 
 ```typescript
-gapi.client.replicapoolupdater.rollingUpdates.<method name>({ /* method parameters */ })
+gapi.client.rollingUpdates.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.replicapoolupdater.zoneOperations.<method name>({ /* method parameters */ })
+gapi.client.zoneOperations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

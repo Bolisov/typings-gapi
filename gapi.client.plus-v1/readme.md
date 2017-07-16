@@ -1,5 +1,5 @@
 # Typescript typings for Google+ API
-The Google+ API enables developers to build on top of the Google+ platform.
+Builds on top of the Google+ platform.
 For detailed description please check [documentation](https://developers.google.com/+/api/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('plus', 'v1', () => {
     // now we can use gapi.client.plus
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,12 +69,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google+ API resources:
 
 ```typescript
-gapi.client.plus.activities.<method name>({ /* method parameters */ })
+gapi.client.activities.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plus.comments.<method name>({ /* method parameters */ })
+gapi.client.comments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plus.people.<method name>({ /* method parameters */ })
+gapi.client.people.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

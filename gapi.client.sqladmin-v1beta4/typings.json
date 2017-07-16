@@ -3,7 +3,7 @@
     "main": "gapi.client.sqladmin.d.ts",
     "version": "1-beta4",
     "author": "Bolisov Alexey",
-    "description": "API for Cloud SQL database instance management.",
+    "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

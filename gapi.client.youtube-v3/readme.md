@@ -1,5 +1,5 @@
 # Typescript typings for YouTube Data API
-Programmatic access to YouTube features.
+Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.
 For detailed description please check [documentation](https://developers.google.com/youtube/v3).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('youtube', 'v3', () => {
     // now we can use gapi.client.youtube
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -76,81 +75,84 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use YouTube Data API resources:
 
 ```typescript
-gapi.client.youtube.activities.<method name>({ /* method parameters */ })
+gapi.client.activities.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.captions.<method name>({ /* method parameters */ })
+gapi.client.captions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.channelBanners.<method name>({ /* method parameters */ })
+gapi.client.channelBanners.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.channelSections.<method name>({ /* method parameters */ })
+gapi.client.channelSections.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.channels.<method name>({ /* method parameters */ })
+gapi.client.channels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.commentThreads.<method name>({ /* method parameters */ })
+gapi.client.commentThreads.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.comments.<method name>({ /* method parameters */ })
+gapi.client.comments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.fanFundingEvents.<method name>({ /* method parameters */ })
+gapi.client.fanFundingEvents.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.guideCategories.<method name>({ /* method parameters */ })
+gapi.client.guideCategories.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.i18nLanguages.<method name>({ /* method parameters */ })
+gapi.client.i18nLanguages.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.i18nRegions.<method name>({ /* method parameters */ })
+gapi.client.i18nRegions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.liveBroadcasts.<method name>({ /* method parameters */ })
+gapi.client.liveBroadcasts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.liveChatBans.<method name>({ /* method parameters */ })
+gapi.client.liveChatBans.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.liveChatMessages.<method name>({ /* method parameters */ })
+gapi.client.liveChatMessages.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.liveChatModerators.<method name>({ /* method parameters */ })
+gapi.client.liveChatModerators.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.liveStreams.<method name>({ /* method parameters */ })
+gapi.client.liveStreams.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.playlistItems.<method name>({ /* method parameters */ })
+gapi.client.playlistItems.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.playlists.<method name>({ /* method parameters */ })
+gapi.client.playlists.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.search.<method name>({ /* method parameters */ })
+gapi.client.search.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.sponsors.<method name>({ /* method parameters */ })
+gapi.client.sponsors.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.subscriptions.<method name>({ /* method parameters */ })
+gapi.client.subscriptions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.thumbnails.<method name>({ /* method parameters */ })
+gapi.client.superChatEvents.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.videoAbuseReportReasons.<method name>({ /* method parameters */ })
+gapi.client.thumbnails.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.videoCategories.<method name>({ /* method parameters */ })
+gapi.client.videoAbuseReportReasons.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.videos.<method name>({ /* method parameters */ })
+gapi.client.videoCategories.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtube.watermarks.<method name>({ /* method parameters */ })
+gapi.client.videos.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.watermarks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

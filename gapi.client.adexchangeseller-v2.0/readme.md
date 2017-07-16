@@ -1,5 +1,5 @@
 # Typescript typings for Ad Exchange Seller API
-Gives Ad Exchange seller users access to their inventory and the ability to generate reports
+Accesses the inventory of Ad Exchange seller users and generates reports.
 For detailed description please check [documentation](https://developers.google.com/ad-exchange/seller-rest/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('adexchangeseller', 'v2.0', () => {
     // now we can use gapi.client.adexchangeseller
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,6 +63,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Ad Exchange Seller API resources:
 
 ```typescript
-gapi.client.adexchangeseller.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

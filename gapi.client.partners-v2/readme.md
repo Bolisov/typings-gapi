@@ -1,5 +1,5 @@
 # Typescript typings for Google Partners API
-Lets advertisers search certified companies and create contact leads with them, and also audits the usage of clients.
+Searches certified companies and creates contact leads with them, and also audits the usage of clients.
 For detailed description please check [documentation](https://developers.google.com/partners/).
 
 ## Installing
@@ -34,23 +34,40 @@ Then load api client wrapper:
 gapi.client.load('partners', 'v2', () => {
     // now we can use gapi.client.partners
     // ... 
-});
-```
+});```
 
 
 
 After that you can use Google Partners API resources:
 
 ```typescript
-gapi.client.partners.userEvents.<method name>({ /* method parameters */ })
+gapi.client.users.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.partners.clientMessages.<method name>({ /* method parameters */ })
+gapi.client.companies.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.partners.userStates.<method name>({ /* method parameters */ })
+gapi.client.userEvents.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.partners.companies.<method name>({ /* method parameters */ })
+gapi.client.clientMessages.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.exams.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.leads.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.offers.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.analytics.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.userStates.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.v2.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

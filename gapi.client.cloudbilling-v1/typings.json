@@ -3,7 +3,7 @@
     "main": "gapi.client.cloudbilling.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Retrieves Google Developers Console billing accounts and associates them with projects.",
+    "description": "Allows developers to manage billing for their Google Cloud Platform projects\n    programmatically.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

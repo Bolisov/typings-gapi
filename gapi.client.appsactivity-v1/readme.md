@@ -1,4 +1,4 @@
-# Typescript typings for Google Apps Activity API
+# Typescript typings for G Suite Activity API
 Provides a historical view of activity.
 For detailed description please check [documentation](https://developers.google.com/google-apps/activity/).
 
@@ -14,7 +14,7 @@ Then install typings for *Google API client*:
 typings install gapi.client --save 
 ```
 
-And finally install typings for Google Apps Activity API:
+And finally install typings for G Suite Activity API:
 ```
 typings install gapi.client.appsactivity --save 
 ```
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('appsactivity', 'v1', () => {
     // now we can use gapi.client.appsactivity
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,7 +42,7 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View the activity history of your Google Apps
+        // View the activity history of your Google apps
         'https://www.googleapis.com/auth/activity',
     
         // View and manage the files in your Google Drive
@@ -70,9 +69,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 });            
 ```
 
-After that you can use Google Apps Activity API resources:
+After that you can use G Suite Activity API resources:
 
 ```typescript
-gapi.client.appsactivity.activities.<method name>({ /* method parameters */ })
+gapi.client.activities.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

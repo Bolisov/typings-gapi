@@ -1,9 +1,9 @@
 {
     "name": "cloudtrace",
-    "main": "gapi.client.cloudtrace.d.ts",
+    "main": "gapi.client.cloudtrace-v1.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "The Cloud Trace API allows you to send traces to and retrieve traces from Google Cloud Trace.",
+    "description": "Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Stackdriver Trace for display, reporting, and analysis.\n",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

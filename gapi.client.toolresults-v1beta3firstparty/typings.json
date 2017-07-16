@@ -1,0 +1,14 @@
+{
+    "name": "toolresults",
+    "main": "gapi.client.toolresults-v1beta3firstparty.d.ts",
+    "version": "1-beta3firstparty",
+    "author": "Bolisov Alexey",
+    "description": "Reads and publishes results from Firebase Test Lab.",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

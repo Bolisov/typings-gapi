@@ -1,5 +1,5 @@
 # Typescript typings for Admin Reports API
-Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.
+Fetches reports for the administrators of G Suite customers about the usage, collaboration, security, and risk for their users.
 For detailed description please check [documentation](https://developers.google.com/admin-sdk/reports/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('admin', 'reports_v1', () => {
     // now we can use gapi.client.admin
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,10 +42,10 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View audit reports of Google Apps for your domain
+        // View audit reports for your G Suite domain
         'https://www.googleapis.com/auth/admin.reports.audit.readonly',
     
-        // View usage reports of Google Apps for your domain
+        // View usage reports for your G Suite domain
         'https://www.googleapis.com/auth/admin.reports.usage.readonly',
     ],
     immediate = true;
@@ -64,15 +63,15 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Admin Reports API resources:
 
 ```typescript
-gapi.client.admin.activities.<method name>({ /* method parameters */ })
+gapi.client.activities.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.channels.<method name>({ /* method parameters */ })
+gapi.client.channels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.customerUsageReports.<method name>({ /* method parameters */ })
+gapi.client.customerUsageReports.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.userUsageReport.<method name>({ /* method parameters */ })
+gapi.client.userUsageReport.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -3,7 +3,7 @@
     "main": "gapi.client.script.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "An API for executing Google Apps Script projects.",
+    "description": "Executes Google Apps Script projects.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

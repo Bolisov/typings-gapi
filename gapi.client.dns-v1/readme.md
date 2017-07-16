@@ -1,5 +1,5 @@
 # Typescript typings for Google Cloud DNS API
-The Google Cloud DNS API provides services for configuring and serving authoritative DNS records.
+Configures and serves authoritative DNS records.
 For detailed description please check [documentation](https://developers.google.com/cloud-dns).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('dns', 'v1', () => {
     // now we can use gapi.client.dns
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,15 +69,15 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Cloud DNS API resources:
 
 ```typescript
-gapi.client.dns.changes.<method name>({ /* method parameters */ })
+gapi.client.changes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.dns.managedZones.<method name>({ /* method parameters */ })
+gapi.client.managedZones.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.dns.projects.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.dns.resourceRecordSets.<method name>({ /* method parameters */ })
+gapi.client.resourceRecordSets.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

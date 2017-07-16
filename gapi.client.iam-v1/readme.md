@@ -1,4 +1,4 @@
-# Typescript typings for Google Identity and Access Management API
+# Typescript typings for Google Identity and Access Management (IAM) API
 Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.
 For detailed description please check [documentation](https://cloud.google.com/iam/).
 
@@ -14,7 +14,7 @@ Then install typings for *Google API client*:
 typings install gapi.client --save 
 ```
 
-And finally install typings for Google Identity and Access Management API:
+And finally install typings for Google Identity and Access Management (IAM) API:
 ```
 typings install gapi.client.iam --save 
 ```
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('iam', 'v1', () => {
     // now we can use gapi.client.iam
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -58,9 +57,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 });            
 ```
 
-After that you can use Google Identity and Access Management API resources:
+After that you can use Google Identity and Access Management (IAM) API resources:
 
 ```typescript
-gapi.client.iam.projects.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.roles.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

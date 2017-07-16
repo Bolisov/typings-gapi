@@ -1,9 +1,9 @@
 {
     "name": "logging",
-    "main": "gapi.client.logging.d.ts",
+    "main": "gapi.client.logging-v2beta1.d.ts",
     "version": "2-beta1",
     "author": "Bolisov Alexey",
-    "description": "The Google Cloud Logging API lets you write log entries and manage your logs, log sinks and logs-based metrics.",
+    "description": "Writes log entries and manages your Stackdriver Logging configuration.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

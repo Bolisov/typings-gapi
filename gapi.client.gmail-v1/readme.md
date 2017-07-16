@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('gmail', 'v1', () => {
     // now we can use gapi.client.gmail
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,7 +42,7 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View and manage your mail
+        // Read, send, delete, and manage your email
         'https://mail.google.com/',
     
         // Manage drafts and send emails
@@ -55,6 +54,9 @@ var client_id = '',
         // Manage mailbox labels
         'https://www.googleapis.com/auth/gmail.labels',
     
+        // View your email message metadata such as labels and headers, but not the email body
+        'https://www.googleapis.com/auth/gmail.metadata',
+    
         // View and modify but not delete your email
         'https://www.googleapis.com/auth/gmail.modify',
     
@@ -63,6 +65,12 @@ var client_id = '',
     
         // Send email on your behalf
         'https://www.googleapis.com/auth/gmail.send',
+    
+        // Manage your basic mail settings
+        'https://www.googleapis.com/auth/gmail.settings.basic',
+    
+        // Manage your sensitive mail settings, including who can manage your mail
+        'https://www.googleapis.com/auth/gmail.settings.sharing',
     ],
     immediate = true;
 // ...
@@ -79,6 +87,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Gmail API resources:
 
 ```typescript
-gapi.client.gmail.users.<method name>({ /* method parameters */ })
+gapi.client.users.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('content', 'v2', () => {
     // now we can use gapi.client.content
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,33 +60,33 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Content API for Shopping resources:
 
 ```typescript
-gapi.client.content.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.accountshipping.<method name>({ /* method parameters */ })
+gapi.client.accountstatuses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.accountstatuses.<method name>({ /* method parameters */ })
+gapi.client.accounttax.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.accounttax.<method name>({ /* method parameters */ })
+gapi.client.datafeeds.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.datafeeds.<method name>({ /* method parameters */ })
+gapi.client.datafeedstatuses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.datafeedstatuses.<method name>({ /* method parameters */ })
+gapi.client.inventory.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.inventory.<method name>({ /* method parameters */ })
+gapi.client.orders.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.orders.<method name>({ /* method parameters */ })
+gapi.client.products.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.products.<method name>({ /* method parameters */ })
+gapi.client.productstatuses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.content.productstatuses.<method name>({ /* method parameters */ })
+gapi.client.shippingsettings.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -1,5 +1,5 @@
 # Typescript typings for TaskQueue API
-Lets you access a Google App Engine Pull Task Queue over REST.
+Accesses a Google App Engine Pull Task Queue over REST.
 For detailed description please check [documentation](https://developers.google.com/appengine/docs/python/taskqueue/rest).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('taskqueue', 'v1beta1', () => {
     // now we can use gapi.client.taskqueue
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,9 +63,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use TaskQueue API resources:
 
 ```typescript
-gapi.client.taskqueue.taskqueues.<method name>({ /* method parameters */ })
+gapi.client.taskqueues.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.taskqueue.tasks.<method name>({ /* method parameters */ })
+gapi.client.tasks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

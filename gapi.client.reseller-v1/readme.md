@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('reseller', 'v1', () => {
     // now we can use gapi.client.reseller
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,9 +63,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Enterprise Apps Reseller API resources:
 
 ```typescript
-gapi.client.reseller.customers.<method name>({ /* method parameters */ })
+gapi.client.customers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.reseller.subscriptions.<method name>({ /* method parameters */ })
+gapi.client.resellernotify.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.subscriptions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

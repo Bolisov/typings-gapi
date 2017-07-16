@@ -1,0 +1,14 @@
+{
+    "name": "flightavailability",
+    "main": "gapi.client.flightavailability.d.ts",
+    "version": "1",
+    "author": "Bolisov Alexey",
+    "description": "The Google Flight Availability API provides flight availability to partner airlines.\n",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

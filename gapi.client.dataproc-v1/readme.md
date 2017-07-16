@@ -1,5 +1,5 @@
 # Typescript typings for Google Cloud Dataproc API
-An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.
+Manages Hadoop-based clusters and jobs on Google Cloud Platform.
 For detailed description please check [documentation](https://cloud.google.com/dataproc/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('dataproc', 'v1', () => {
     // now we can use gapi.client.dataproc
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -45,15 +44,6 @@ var client_id = '',
     scope = [     
         // View and manage your data across Google Cloud Platform services
         'https://www.googleapis.com/auth/cloud-platform',
-    
-        // Administrate log data for your projects
-        'https://www.googleapis.com/auth/logging.admin',
-    
-        // View log data for your projects
-        'https://www.googleapis.com/auth/logging.read',
-    
-        // Submit log data for your projects
-        'https://www.googleapis.com/auth/logging.write',
     ],
     immediate = true;
 // ...
@@ -70,9 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Cloud Dataproc API resources:
 
 ```typescript
-gapi.client.dataproc.media.<method name>({ /* method parameters */ })
-    .then(response => { /* handling response */ });
-
-gapi.client.dataproc.projects.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

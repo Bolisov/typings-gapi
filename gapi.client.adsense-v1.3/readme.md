@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('adsense', 'v1.3', () => {
     // now we can use gapi.client.adsense
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,30 +63,30 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use AdSense Management API resources:
 
 ```typescript
-gapi.client.adsense.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.adclients.<method name>({ /* method parameters */ })
+gapi.client.adclients.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.adunits.<method name>({ /* method parameters */ })
+gapi.client.adunits.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.alerts.<method name>({ /* method parameters */ })
+gapi.client.alerts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.customchannels.<method name>({ /* method parameters */ })
+gapi.client.customchannels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.metadata.<method name>({ /* method parameters */ })
+gapi.client.metadata.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.reports.<method name>({ /* method parameters */ })
+gapi.client.reports.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.savedadstyles.<method name>({ /* method parameters */ })
+gapi.client.savedadstyles.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsense.urlchannels.<method name>({ /* method parameters */ })
+gapi.client.urlchannels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

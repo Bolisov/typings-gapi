@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('groupssettings', 'v1', () => {
     // now we can use gapi.client.groupssettings
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,7 +42,7 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View and manage the settings of a Google Apps Group
+        // View and manage the settings of a G Suite group
         'https://www.googleapis.com/auth/apps.groups.settings',
     ],
     immediate = true;
@@ -61,6 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Groups Settings API resources:
 
 ```typescript
-gapi.client.groupssettings.groups.<method name>({ /* method parameters */ })
+gapi.client.groups.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

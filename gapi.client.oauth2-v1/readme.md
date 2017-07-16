@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('oauth2', 'v1', () => {
     // now we can use gapi.client.oauth2
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,6 +69,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google OAuth2 API resources:
 
 ```typescript
-gapi.client.oauth2.userinfo.<method name>({ /* method parameters */ })
+gapi.client.userinfo.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

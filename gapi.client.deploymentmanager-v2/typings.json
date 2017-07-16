@@ -3,7 +3,7 @@
     "main": "gapi.client.deploymentmanager.d.ts",
     "version": "2",
     "author": "Bolisov Alexey",
-    "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
+    "description": "Declares, configures, and deploys complex solutions on Google Cloud Platform.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

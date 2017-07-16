@@ -1,5 +1,5 @@
 # Typescript typings for Ad Exchange Seller API
-Gives Ad Exchange seller users access to their inventory and the ability to generate reports
+Accesses the inventory of Ad Exchange seller users and generates reports.
 For detailed description please check [documentation](https://developers.google.com/ad-exchange/seller-rest/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('adexchangeseller', 'v1', () => {
     // now we can use gapi.client.adexchangeseller
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,18 +63,18 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Ad Exchange Seller API resources:
 
 ```typescript
-gapi.client.adexchangeseller.adclients.<method name>({ /* method parameters */ })
+gapi.client.adclients.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangeseller.adunits.<method name>({ /* method parameters */ })
+gapi.client.adunits.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangeseller.customchannels.<method name>({ /* method parameters */ })
+gapi.client.customchannels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangeseller.reports.<method name>({ /* method parameters */ })
+gapi.client.reports.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangeseller.urlchannels.<method name>({ /* method parameters */ })
+gapi.client.urlchannels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

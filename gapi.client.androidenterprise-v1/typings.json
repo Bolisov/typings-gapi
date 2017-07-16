@@ -3,7 +3,7 @@
     "main": "gapi.client.androidenterprise.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
+    "description": "Manages the deployment of apps to Android for Work users.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

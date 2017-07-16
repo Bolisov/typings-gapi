@@ -1,6 +1,5 @@
 {
     "versions": {
-        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.drive-v1",
         "2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.drive-v2",
         "3": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.drive-v3"
     }

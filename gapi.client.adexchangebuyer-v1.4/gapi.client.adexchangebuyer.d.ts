@@ -9,11 +9,15 @@ declare module gapi.client.adexchangebuyer {
     interface Account {
         // Your bidder locations that have distinct URLs.
         bidderLocation?: {        
-            // The protocol that the bidder endpoint is using. By default, OpenRTB protocols use JSON, except PROTOCOL_OPENRTB_PROTOBUF. PROTOCOL_OPENRTB_PROTOBUF uses protobuf encoding over the latest OpenRTB protocol version, which is 2.3 right now. Allowed values:  
+            // The protocol that the bidder endpoint is using. OpenRTB protocols with prefix PROTOCOL_OPENRTB_PROTOBUF use proto buffer, otherwise use JSON.  Allowed values:  
             // - PROTOCOL_ADX 
             // - PROTOCOL_OPENRTB_2_2 
             // - PROTOCOL_OPENRTB_2_3 
-            // - PROTOCOL_OPENRTB_PROTOBUF
+            // - PROTOCOL_OPENRTB_2_4 
+            // - PROTOCOL_OPENRTB_2_5 
+            // - PROTOCOL_OPENRTB_PROTOBUF_2_3 
+            // - PROTOCOL_OPENRTB_PROTOBUF_2_4 
+            // - PROTOCOL_OPENRTB_PROTOBUF_2_5
             bidProtocol?: string,
             // The maximum queries per second the Ad Exchange will send.
             maximumQps?: number,
@@ -123,7 +127,7 @@ declare module gapi.client.adexchangebuyer {
     interface CreateOrdersRequest {
         // The list of proposals to create.
         proposals?: Proposal[],        
-        // 
+        // Web property id of the seller creating these orders
         webPropertyCode?: string,
     }
     
@@ -137,15 +141,17 @@ declare module gapi.client.adexchangebuyer {
         HTMLSnippet?: string,
         // Account id.
         accountId?: number,
+        // The link to the Ad Preferences page. This is only supported for native ads.
+        adChoicesDestinationUrl?: string,
         // Detected advertiser id, if any. Read-only. This field should not be set in requests.
         advertiserId?: string[],        
-        // The name of the company being advertised in the creative.
+        // The name of the company being advertised in the creative. The value provided must exist in the advertisers.txt file.
         advertiserName?: string,
         // The agency id for this creative.
         agencyId?: string,
         // The last upload timestamp of this creative if it was uploaded via API. Read-only. The value of this field is generated, and will be ignored for uploads. (formatted RFC 3339 timestamp).
         apiUploadTimestamp?: string,
-        // All attributes for the ads that may be shown from this snippet.
+        // List of buyer selectable attributes for the ads that may be shown from this snippet. Each attribute is represented by an integer as defined in  buyer-declarable-creative-attributes.txt.
         attribute?: number[],        
         // A buyer-specific id identifying the creative in this ad.
         buyerCreativeId?: string,
@@ -153,6 +159,17 @@ declare module gapi.client.adexchangebuyer {
         clickThroughUrl?: string[],        
         // Shows any corrections that were applied to this creative. Read-only. This field should not be set in requests.
         corrections?: {        
+            // All known serving contexts containing serving status information.
+            contexts?: {            
+                // Only set when contextType=AUCTION_TYPE. Represents the auction types this correction applies to.
+                auctionType?: string[],                
+                // The type of context (e.g., location, platform, auction type, SSL-ness).
+                contextType?: string,
+                // Only set when contextType=LOCATION. Represents the geo criterias this correction applies to.
+                geoCriteriaId?: number[],                
+                // Only set when contextType=PLATFORM. Represents the platforms this correction applies to.
+                platform?: string[],                
+            }[],            
             // Additional details about the correction.
             details?: string[],            
             // The type of correction that was applied to the creative.
@@ -160,6 +177,8 @@ declare module gapi.client.adexchangebuyer {
         }[],        
         // Top-level deals status. Read-only. This field should not be set in requests. If disapproved, an entry for auctionType=DIRECT_DEALS (or ALL) in servingRestrictions will also exist. Note that this may be nuanced with other contextual restrictions, in which case it may be preferable to read from servingRestrictions directly.
         dealsStatus?: string,
+        // Detected domains for this creative. Read-only. This field should not be set in requests.
+        detectedDomains?: string[],        
         // The filtering reasons for the creative. Read-only. This field should not be set in requests.
         filteringReasons?: {        
             // The date in ISO 8601 format for the data. The data is collected from 00:00:00 to 23:59:59 in PST.
@@ -168,7 +187,7 @@ declare module gapi.client.adexchangebuyer {
             reasons?: {            
                 // The number of times the creative was filtered for the status. The count is aggregated across all publishers on the exchange.
                 filteringCount?: string,
-                // The filtering status code. Please refer to the creative-status-codes.txt file for different statuses.
+                // The filtering status code as defined in  creative-status-codes.txt.
                 filteringStatus?: number,
             }[],            
         },        
@@ -178,7 +197,9 @@ declare module gapi.client.adexchangebuyer {
         impressionTrackingUrl?: string[],        
         // Resource type.
         kind?: string,
-        // If nativeAd is set, HTMLSnippet and videoURL should not be set.
+        // Detected languages for this creative. Read-only. This field should not be set in requests.
+        languages?: string[],        
+        // If nativeAd is set, HTMLSnippet and the videoURL outside of nativeAd should not be set. (The videoURL inside nativeAd can be set.)
         nativeAd?: {        
             // 
             advertiser?: string,
@@ -195,6 +216,8 @@ declare module gapi.client.adexchangebuyer {
             body?: string,
             // A label for the button that the user is supposed to click.
             callToAction?: string,
+            // The URL that the browser/SDK will load when the user clicks the ad.
+            clickLinkUrl?: string,
             // The URL to use for click tracking.
             clickTrackingUrl?: string,
             // A short title for the ad.
@@ -225,16 +248,18 @@ declare module gapi.client.adexchangebuyer {
             starRating?: number,
             // The URL to the app store to purchase/download the promoted app.
             store?: string,
+            // The URL of the XML VAST for a native ad. Note this is a separate field from resource.video_url.
+            videoURL?: string,
         },        
         // Top-level open auction status. Read-only. This field should not be set in requests. If disapproved, an entry for auctionType=OPEN_AUCTION (or ALL) in servingRestrictions will also exist. Note that this may be nuanced with other contextual restrictions, in which case it may be preferable to read from ServingRestrictions directly.
         openAuctionStatus?: string,
-        // Detected product categories, if any. Read-only. This field should not be set in requests.
+        // Detected product categories, if any. Each category is represented by an integer as defined in  ad-product-categories.txt. Read-only. This field should not be set in requests.
         productCategories?: number[],        
-        // All restricted categories for the ads that may be shown from this snippet.
+        // All restricted categories for the ads that may be shown from this snippet. Each category is represented by an integer as defined in the  ad-restricted-categories.txt.
         restrictedCategories?: number[],        
-        // Detected sensitive categories, if any. Read-only. This field should not be set in requests.
+        // Detected sensitive categories, if any. Each category is represented by an integer as defined in  ad-sensitive-categories.txt. Read-only. This field should not be set in requests.
         sensitiveCategories?: number[],        
-        // The granular status of this ad in specific contexts. A context here relates to where something ultimately serves (for example, a physical location, a platform, an HTTPS vs HTTP request, or the type of auction). Read-only. This field should not be set in requests.
+        // The granular status of this ad in specific contexts. A context here relates to where something ultimately serves (for example, a physical location, a platform, an HTTPS vs HTTP request, or the type of auction). Read-only. This field should not be set in requests. See the examples in the Creatives guide for more details.
         servingRestrictions?: {        
             // All known contexts/restrictions.
             contexts?: {            
@@ -242,7 +267,7 @@ declare module gapi.client.adexchangebuyer {
                 auctionType?: string[],                
                 // The type of context (e.g., location, platform, auction type, SSL-ness).
                 contextType?: string,
-                // Only set when contextType=LOCATION. Represents the geo criterias this restriction applies to.
+                // Only set when contextType=LOCATION. Represents the geo criterias this restriction applies to. Impressions are considered to match a context if either the user location or publisher location matches a given geoCriteriaId.
                 geoCriteriaId?: number[],                
                 // Only set when contextType=PLATFORM. Represents the platforms this restriction applies to.
                 platform?: string[],                
@@ -257,14 +282,28 @@ declare module gapi.client.adexchangebuyer {
             // Why the creative is ineligible to serve in this context (e.g., it has been explicitly disapproved or is pending review).
             reason?: string,
         }[],        
-        // All vendor types for the ads that may be shown from this snippet.
+        // List of vendor types for the ads that may be shown from this snippet. Each vendor type is represented by an integer as defined in vendors.txt.
         vendorType?: number[],        
         // The version for this creative. Read-only. This field should not be set in requests.
         version?: number,
-        // The url to fetch a video ad. If set, HTMLSnippet should not be set.
+        // The URL to fetch a video ad. If set, HTMLSnippet and the nativeAd should not be set. Note, this is different from resource.native_ad.video_url above.
         videoURL?: string,
         // Ad width.
         width?: number,
+    }
+    
+    interface CreativeDealIds {
+        // A list of external deal ids and ARC approval status.
+        dealStatuses?: {        
+            // ARC approval status.
+            arcStatus?: string,
+            // External deal ID.
+            dealId?: string,
+            // Publisher ID.
+            webPropertyId?: number,
+        }[],        
+        // Resource type.
+        kind?: string,
     }
     
     interface CreativesList {
@@ -277,20 +316,30 @@ declare module gapi.client.adexchangebuyer {
     }
     
     interface DealServingMetadata {
+        // True if alcohol ads are allowed for this deal (read-only). This field is only populated when querying for finalized orders using the method GetFinalizedOrderDeals
+        alcoholAdsAllowed?: boolean,
         // Tracks which parties (if any) have paused a deal. (readonly, except via PauseResumeOrderDeals action)
         dealPauseStatus?: DealServingMetadataDealPauseStatus,
     }
     
     interface DealServingMetadataDealPauseStatus {
         // 
+        buyerPauseReason?: string,
+        // If the deal is paused, records which party paused the deal first.
+        firstPausedBy?: string,
+        // 
         hasBuyerPaused?: boolean,
         // 
         hasSellerPaused?: boolean,
+        // 
+        sellerPauseReason?: string,
     }
     
     interface DealTerms {
         // Visibilty of the URL in bid requests.
         brandingType?: string,
+        // Indicates that this ExternalDealId exists under at least two different AdxInventoryDeals. Currently, the only case that the same ExternalDealId will exist is programmatic cross sell case.
+        crossListedExternalDealIdType?: string,
         // Description for the proposed terms of the deal.
         description?: string,
         // Non-binding estimate of the estimated gross spend for this deal Can be set by buyer or seller.
@@ -303,15 +352,34 @@ declare module gapi.client.adexchangebuyer {
         nonGuaranteedAuctionTerms?: DealTermsNonGuaranteedAuctionTerms,
         // The terms for non-guaranteed fixed price deals.
         nonGuaranteedFixedPriceTerms?: DealTermsNonGuaranteedFixedPriceTerms,
+        // The terms for rubicon non-guaranteed deals.
+        rubiconNonGuaranteedTerms?: DealTermsRubiconNonGuaranteedTerms,
+        // For deals with Cost Per Day billing, defines the timezone used to mark the boundaries of a day (buyer-readonly)
+        sellerTimeZone?: string,
     }
     
     interface DealTermsGuaranteedFixedPriceTerms {
+        // External billing info for this Deal. This field is relevant when external billing info such as price has a different currency code than DFP/AdX.
+        billingInfo?: DealTermsGuaranteedFixedPriceTermsBillingInfo,
         // Fixed price for the specified buyer.
         fixedPrices?: PricePerBuyer[],        
         // Guaranteed impressions as a percentage. This is the percentage of guaranteed looks that the buyer is guaranteeing to buy.
         guaranteedImpressions?: string,
-        // Count of guaranteed looks. Required for deal, optional for product.
+        // Count of guaranteed looks. Required for deal, optional for product. For CPD deals, buyer changes to guaranteed_looks will be ignored.
         guaranteedLooks?: string,
+        // Count of minimum daily looks for a CPD deal. For CPD deals, buyer should negotiate on this field instead of guaranteed_looks.
+        minimumDailyLooks?: string,
+    }
+    
+    interface DealTermsGuaranteedFixedPriceTermsBillingInfo {
+        // The timestamp (in ms since epoch) when the original reservation price for the deal was first converted to DFP currency. This is used to convert the contracted price into buyer's currency without discrepancy.
+        currencyConversionTimeMs?: string,
+        // The DFP line item id associated with this deal. For features like CPD, buyers can retrieve the DFP line item for billing reconciliation.
+        dfpLineItemId?: string,
+        // The original contracted quantity (# impressions) for this deal. To ensure delivery, sometimes the publisher will book the deal with a impression buffer, such that guaranteed_looks is greater than the contracted quantity. However clients are billed using the original contracted quantity.
+        originalContractedQuantity?: string,
+        // The original reservation price for the deal, if the currency code is different from the one used in negotiation.
+        price?: Price,
     }
     
     interface DealTermsNonGuaranteedAuctionTerms {
@@ -326,12 +394,19 @@ declare module gapi.client.adexchangebuyer {
         fixedPrices?: PricePerBuyer[],        
     }
     
+    interface DealTermsRubiconNonGuaranteedTerms {
+        // Optional price for Rubicon priority access in the auction.
+        priorityPrice?: Price,
+        // Optional price for Rubicon standard access in the auction.
+        standardPrice?: Price,
+    }
+    
     interface DeleteOrderDealsRequest {
         // List of deals to delete for a given proposal
         dealIds?: string[],        
         // The last known proposal revision number.
         proposalRevisionNumber?: string,
-        // 
+        // Indicates an optional action to take on the proposal
         updateAction?: string,
     }
     
@@ -358,6 +433,22 @@ declare module gapi.client.adexchangebuyer {
         numTimeUnits?: number,
         // 
         timeUnitType?: string,
+    }
+    
+    interface Dimension {
+        // 
+        dimensionType?: string,
+        // 
+        dimensionValues?: DimensionDimensionValue[],        
+    }
+    
+    interface DimensionDimensionValue {
+        // Id of the dimension.
+        id?: number,
+        // Name of the dimension mainly for debugging purposes, except for the case of CREATIVE_SIZE. For CREATIVE_SIZE, strings are used instead of ids.
+        name?: string,
+        // Percent of total impressions for a dimension type. e.g. {dimension_type: 'GENDER', [{dimension_value: {id: 1, name: 'MALE', percentage: 60}}]} Gender MALE is 60% of all impressions which have gender.
+        percentage?: number,
     }
     
     interface EditAllOrderDealsRequest {
@@ -389,7 +480,7 @@ declare module gapi.client.adexchangebuyer {
     }
     
     interface GetOrderNotesResponse {
-        // The list of matching notes.
+        // The list of matching notes. The notes for a proposal are ordered from oldest to newest. If the notes span multiple proposals, they will be grouped by proposal, with the notes for the most recently modified proposal appearing first.
         notes?: MarketplaceNote[],        
     }
     
@@ -412,7 +503,7 @@ declare module gapi.client.adexchangebuyer {
         creativePreApprovalPolicy?: string,
         // Specifies whether the creative is safeFrame compatible (buyer-readonly)
         creativeSafeFrameCompatibility?: string,
-        // A unique deal=id for the deal (readonly).
+        // A unique deal-id for the deal (readonly).
         dealId?: string,
         // Metadata about the serving status of this deal (readonly, writes via custom actions)
         dealServingMetadata?: DealServingMetadata,
@@ -424,8 +515,12 @@ declare module gapi.client.adexchangebuyer {
         flightEndTimeMs?: string,
         // Proposed flight start time of the deal (ms since epoch) This will generally be stored in a granularity of a second. (updatable)
         flightStartTimeMs?: string,
-        // Description for the deal terms. (updatable)
+        // Description for the deal terms. (buyer-readonly)
         inventoryDescription?: string,
+        // Indicates whether the current deal is a RFP template. RFP template is created by buyer and not based on seller created products.
+        isRfpTemplate?: boolean,
+        // True, if the buyside inventory setup is complete for this deal. (readonly, except via OrderSetupCompleted action)
+        isSetupComplete?: boolean,
         // Identifies what kind of resource this is. Value: the fixed string "adexchangebuyer#marketplaceDeal".
         kind?: string,
         // The time (ms since epoch) when the deal was last updated. (readonly)
@@ -582,6 +677,8 @@ declare module gapi.client.adexchangebuyer {
         kind?: string,
         // Request containing any of these language codes will match.
         languages?: string[],        
+        // Requests where the predicted viewability is below the specified decile will not match. E.g. if the buyer sets this value to 5, requests from slots where the predicted viewability is below 50% will not match. If the predicted viewability is unknown this field will be ignored.
+        minimumViewabilityDecile?: number,
         // Requests containing any of these mobile carrier ids will match. Values are from mobile-carriers.csv in the downloadable files section.
         mobileCarriers?: string[],        
         // Requests containing any of these mobile device ids will match. Values are from mobile-devices.csv in the downloadable files section.
@@ -599,6 +696,8 @@ declare module gapi.client.adexchangebuyer {
         platforms?: string[],        
         // Creative attributes should be declared here if all creatives corresponding to this pretargeting configuration have that creative attribute. Values are from pretargetable-creative-attributes.txt in the downloadable files section.
         supportedCreativeAttributes?: string[],        
+        // Requests containing the specified type of user data will match. Possible values are HOSTED_MATCH_DATA, which means the request is cookie-targetable and has a match in the buyer's hosted match table, and COOKIE_OR_IDFA, which means the request has either a targetable cookie or an iOS IDFA.
+        userIdentifierDataRequired?: string[],        
         // Requests containing any of these user list ids will match.
         userLists?: string[],        
         // Requests that allow any of these vendor ids will match. Values are from vendors.txt in the downloadable files section.
@@ -628,11 +727,17 @@ declare module gapi.client.adexchangebuyer {
         amountMicros?: number,
         // The currency code for the price.
         currencyCode?: string,
+        // In case of CPD deals, the expected CPM in micros.
+        expectedCpmMicros?: number,
         // The pricing type for the deal/product.
         pricingType?: string,
     }
     
     interface PricePerBuyer {
+        // Optional access type for this buyer.
+        auctionTier?: string,
+        // Reference to the buyer that will get billed.
+        billedBuyer?: Buyer,
         // The buyer who will pay this price. If unset, all buyers can pay this price (if the advertisers match, and there's no more specific rule matching the buyer).
         buyer?: Buyer,
         // The specified price
@@ -647,10 +752,16 @@ declare module gapi.client.adexchangebuyer {
     }
     
     interface Product {
+        // The billed buyer corresponding to the buyer that created the offer. (readonly, except on create)
+        billedBuyer?: Buyer,
+        // The buyer that created the offer if this is a buyer initiated offer (readonly, except on create)
+        buyer?: Buyer,
         // Creation time in ms. since epoch (readonly)
         creationTimeMs?: string,
         // Optional contact information for the creator of this product. (buyer-readonly)
         creatorContacts?: ContactInformation[],        
+        // The role that created the offer. Set to BUYER for buyer initiated offers.
+        creatorRole?: string,
         // The set of fields around delivery control that are interesting for a buyer to see but are non-negotiable. These are set by the publisher. This message is assigned an id of 100 since some day we would want to model this as a protobuf extension.
         deliveryControl?: DeliveryControl,
         // The proposed end time for the deal (ms since epoch) (buyer-readonly)
@@ -669,6 +780,8 @@ declare module gapi.client.adexchangebuyer {
         lastUpdateTimeMs?: string,
         // Optional legacy offer id if this offer is a preferred deal offer.
         legacyOfferId?: string,
+        // Marketplace publisher profile Id. This Id differs from the regular publisher_profile_id in that 1. This is a new id, the old Id will be deprecated in 2017. 2. This id uniquely identifies a publisher profile by itself.
+        marketplacePublisherProfileId?: string,
         // The name for this product as set by the seller. (buyer-readonly)
         name?: string,
         // Optional private auction id if this offer is a private auction offer.
@@ -677,6 +790,8 @@ declare module gapi.client.adexchangebuyer {
         productId?: string,
         // Id of the publisher profile for a given seller. A (seller.account_id, publisher_profile_id) pair uniquely identifies a publisher profile. Buyers can call the PublisherProfiles::List endpoint to get a list of publisher profiles for a given seller.
         publisherProfileId?: string,
+        // Publisher self-provided forecast information.
+        publisherProvidedForecast?: PublisherProvidedForecast,
         // The revision number of the product. (readonly)
         revisionNumber?: string,
         // Information about the seller that created this product (readonly, except on create)
@@ -698,11 +813,13 @@ declare module gapi.client.adexchangebuyer {
         billedBuyer?: Buyer,
         // Reference to the buyer on the proposal. (readonly, except on create)
         buyer?: Buyer,
-        // Optional contact information fort the buyer. (seller-readonly)
+        // Optional contact information of the buyer. (seller-readonly)
         buyerContacts?: ContactInformation[],        
         // Private data for buyer. (hidden from seller).
         buyerPrivateData?: PrivateData,
-        // When an proposal is in an accepted state, indicates whether the buyer has signed off Once both sides have signed off on a deal, the proposal can be finalized by the seller. (seller-readonly)
+        // IDs of DBM advertisers permission to this proposal.
+        dbmAdvertiserIds?: string[],        
+        // When an proposal is in an accepted state, indicates whether the buyer has signed off. Once both sides have signed off on a deal, the proposal can be finalized by the seller. (seller-readonly)
         hasBuyerSignedOff?: boolean,
         // When an proposal is in an accepted state, indicates whether the buyer has signed off Once both sides have signed off on a deal, the proposal can be finalized by the seller. (buyer-readonly)
         hasSellerSignedOff?: boolean,
@@ -710,7 +827,7 @@ declare module gapi.client.adexchangebuyer {
         inventorySource?: string,
         // True if the proposal is being renegotiated (readonly).
         isRenegotiating?: boolean,
-        // True, if the buyside inventory setup is complete for this proposal. (readonly, except via OrderSetupCompleted action)
+        // True, if the buyside inventory setup is complete for this proposal. (readonly, except via OrderSetupCompleted action) Deprecated in favor of deal level setup complete flag.
         isSetupComplete?: boolean,
         // Identifies what kind of resource this is. Value: the fixed string "adexchangebuyer#proposal".
         kind?: string,
@@ -718,8 +835,6 @@ declare module gapi.client.adexchangebuyer {
         labels?: MarketplaceLabel[],        
         // The role of the last user that either updated the proposal or left a comment. (readonly)
         lastUpdaterOrCommentorRole?: string,
-        // 
-        lastUpdaterRole?: string,
         // The name for the proposal (updatable)
         name?: string,
         // Optional negotiation id if this proposal is a preferred deal proposal.
@@ -738,19 +853,27 @@ declare module gapi.client.adexchangebuyer {
         revisionTimeMs?: string,
         // Reference to the seller on the proposal. (readonly, except on create)
         seller?: Seller,
-        // Optional contact information for the seller (buyer-readonly).
+        // Optional contact information of the seller (buyer-readonly).
         sellerContacts?: ContactInformation[],        
     }
     
     interface PublisherProfileApiProto {
         // The account id of the seller.
         accountId?: string,
+        // Publisher provided info on its audience.
+        audience?: string,
         // A pitch statement for the buyer
         buyerPitchStatement?: string,
+        // Direct contact for the publisher profile.
+        directContact?: string,
+        // Exchange where this publisher profile is from. E.g. AdX, Rubicon etc...
+        exchange?: string,
         // Link to publisher's Google+ page.
         googlePlusLink?: string,
         // True, if this is the parent profile, which represents all domains owned by the publisher.
         isParent?: boolean,
+        // True, if this profile is published. Deprecated for state.
+        isPublished?: boolean,
         // Identifies what kind of resource this is. Value: the fixed string "adexchangebuyer#publisherProfileApiProto".
         kind?: string,
         // The url to the logo for the publisher.
@@ -763,14 +886,33 @@ declare module gapi.client.adexchangebuyer {
         overview?: string,
         // The pair of (seller.account_id, profile_id) uniquely identifies a publisher profile for a given publisher.
         profileId?: number,
+        // Programmatic contact for the publisher profile.
+        programmaticContact?: string,
         // The list of domains represented in this publisher profile. Empty if this is a parent profile.
         publisherDomains?: string[],        
+        // Unique Id for publisher profile.
+        publisherProfileId?: string,
+        // Publisher provided forecasting information.
+        publisherProvidedForecast?: PublisherProvidedForecast,
         // Link to publisher rate card
         rateCardInfoLink?: string,
         // Link for a sample content page.
         samplePageLink?: string,
+        // Seller of the publisher profile.
+        seller?: Seller,
+        // State of the publisher profile.
+        state?: string,
         // Publisher provided key metrics and rankings.
         topHeadlines?: string[],        
+    }
+    
+    interface PublisherProvidedForecast {
+        // Publisher provided dimensions. E.g. geo, sizes etc...
+        dimensions?: Dimension[],        
+        // Publisher provided weekly impressions.
+        weeklyImpressions?: string,
+        // Publisher provided weekly uniques.
+        weeklyUniques?: string,
     }
     
     interface Seller {
@@ -805,8 +947,12 @@ declare module gapi.client.adexchangebuyer {
         companionSizes?: TargetingValueSize[],        
         // The Creative size type.
         creativeSizeType?: string,
+        // The native template for native ad.
+        nativeTemplate?: string,
         // For regular or video creative size type, specifies the size of the creative.
         size?: TargetingValueSize,
+        // The skippable ad type for video size.
+        skippableAdType?: string,
     }
     
     interface TargetingValueDayPartTargeting {
@@ -850,22 +996,82 @@ declare module gapi.client.adexchangebuyer {
     interface AccountsResource {
         // Gets one account by ID.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id
             id: number,
         }) : gapi.client.Request<Account>;        
         
         // Retrieves the authenticated user's list of accounts.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
         }) : gapi.client.Request<AccountsList>;        
         
         // Updates an existing account. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Confirmation for erasing bidder and cookie matching urls.
+            confirmUnsafeAccountChange?: boolean,
             // The account id
             id: number,
         }) : gapi.client.Request<Account>;        
         
         // Updates an existing account.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Confirmation for erasing bidder and cookie matching urls.
+            confirmUnsafeAccountChange?: boolean,
             // The account id
             id: number,
         }) : gapi.client.Request<Account>;        
@@ -876,12 +1082,40 @@ declare module gapi.client.adexchangebuyer {
     interface BillingInfoResource {
         // Returns the billing information for one account specified by account ID.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id.
             accountId: number,
         }) : gapi.client.Request<BillingInfo>;        
         
         // Retrieves a list of billing information for all accounts of the authenticated user.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
         }) : gapi.client.Request<BillingInfoList>;        
         
     }
@@ -890,6 +1124,20 @@ declare module gapi.client.adexchangebuyer {
     interface BudgetResource {
         // Returns the budget information for the adgroup specified by the accountId and billingId.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to get the budget information for.
             accountId: string,
             // The billing id to get the budget information for.
@@ -898,6 +1146,20 @@ declare module gapi.client.adexchangebuyer {
         
         // Updates the budget amount for the budget of the adgroup specified by the accountId and billingId, with the budget amount in the request. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id associated with the budget being updated.
             accountId: string,
             // The billing id associated with the budget being updated.
@@ -906,6 +1168,20 @@ declare module gapi.client.adexchangebuyer {
         
         // Updates the budget amount for the budget of the adgroup specified by the accountId and billingId, with the budget amount in the request.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id associated with the budget being updated.
             accountId: string,
             // The billing id associated with the budget being updated.
@@ -918,6 +1194,20 @@ declare module gapi.client.adexchangebuyer {
     interface CreativesResource {
         // Add a deal id association for the creative.
         addDeal (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id for the account that will serve this creative.
             accountId: number,
             // The buyer-specific id for this creative.
@@ -928,6 +1218,20 @@ declare module gapi.client.adexchangebuyer {
         
         // Gets the status for a single creative. A creative will be available 30-40 minutes after submission.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id for the account that will serve this creative.
             accountId: number,
             // The buyer-specific id for this creative.
@@ -936,10 +1240,38 @@ declare module gapi.client.adexchangebuyer {
         
         // Submit a new creative.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
         }) : gapi.client.Request<Creative>;        
         
         // Retrieves a list of the authenticated user's active creatives. A creative will be available 30-40 minutes after submission.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // When specified, only creatives for the given account ids are returned.
             accountId?: number,
             // When specified, only creatives for the given buyer creative ids are returned.
@@ -954,8 +1286,44 @@ declare module gapi.client.adexchangebuyer {
             pageToken?: string,
         }) : gapi.client.Request<CreativesList>;        
         
+        // Lists the external deal ids associated with the creative.
+        listDeals (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // The id for the account that will serve this creative.
+            accountId: number,
+            // The buyer-specific id for this creative.
+            buyerCreativeId: string,
+        }) : gapi.client.Request<CreativeDealIds>;        
+        
         // Remove a deal id associated with the creative.
         removeDeal (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id for the account that will serve this creative.
             accountId: number,
             // The buyer-specific id for this creative.
@@ -970,24 +1338,82 @@ declare module gapi.client.adexchangebuyer {
     interface MarketplacedealsResource {
         // Delete the specified deals from the proposal
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The proposalId to delete deals from.
             proposalId: string,
         }) : gapi.client.Request<DeleteOrderDealsResponse>;        
         
         // Add new deals for the specified proposal
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // proposalId for which deals need to be added.
             proposalId: string,
         }) : gapi.client.Request<AddOrderDealsResponse>;        
         
         // List all the deals for a given proposal
         list (request: {        
-            // The proposalId to get deals for.
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Query string to retrieve specific deals.
+            pqlQuery?: string,
+            // The proposalId to get deals for. To search across all proposals specify order_id = '-' as part of the URL.
             proposalId: string,
         }) : gapi.client.Request<GetOrderDealsResponse>;        
         
         // Replaces all the deals in the proposal with the passed in deals
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The proposalId to edit deals on.
             proposalId: string,
         }) : gapi.client.Request<EditAllOrderDealsResponse>;        
@@ -998,13 +1424,43 @@ declare module gapi.client.adexchangebuyer {
     interface MarketplacenotesResource {
         // Add notes to the proposal
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The proposalId to add notes for.
             proposalId: string,
         }) : gapi.client.Request<AddOrderNotesResponse>;        
         
         // Get all the notes associated with a proposal
         list (request: {        
-            // The proposalId to get notes for.
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Query string to retrieve specific notes. To search the text contents of notes, please use syntax like "WHERE note.note = "foo" or "WHERE note.note LIKE "%bar%"
+            pqlQuery?: string,
+            // The proposalId to get notes for. To search across all proposals specify order_id = '-' as part of the URL.
             proposalId: string,
         }) : gapi.client.Request<GetOrderNotesResponse>;        
         
@@ -1014,8 +1470,22 @@ declare module gapi.client.adexchangebuyer {
     interface MarketplaceprivateauctionResource {
         // Update a given private auction proposal
         updateproposal (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The private auction id to be updated.
-            privateAuctionId?: string,
+            privateAuctionId: string,
         }) : gapi.client.Request<void>;        
         
     }
@@ -1024,6 +1494,20 @@ declare module gapi.client.adexchangebuyer {
     interface PerformanceReportResource {
         // Retrieves the authenticated user's list of performance metrics.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to get the reports.
             accountId: string,
             // The end time of the report in ISO 8601 timestamp format using UTC.
@@ -1042,6 +1526,20 @@ declare module gapi.client.adexchangebuyer {
     interface PretargetingConfigResource {
         // Deletes an existing pretargeting config.
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to delete the pretargeting config for.
             accountId: string,
             // The specific id of the configuration to delete.
@@ -1050,6 +1548,20 @@ declare module gapi.client.adexchangebuyer {
         
         // Gets a specific pretargeting configuration
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to get the pretargeting config for.
             accountId: string,
             // The specific id of the configuration to retrieve.
@@ -1058,18 +1570,60 @@ declare module gapi.client.adexchangebuyer {
         
         // Inserts a new pretargeting configuration.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to insert the pretargeting config for.
             accountId: string,
         }) : gapi.client.Request<PretargetingConfig>;        
         
         // Retrieves a list of the authenticated user's pretargeting configurations.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to get the pretargeting configs for.
             accountId: string,
         }) : gapi.client.Request<PretargetingConfigList>;        
         
         // Updates an existing pretargeting config. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to update the pretargeting config for.
             accountId: string,
             // The specific id of the configuration to update.
@@ -1078,6 +1632,20 @@ declare module gapi.client.adexchangebuyer {
         
         // Updates an existing pretargeting config.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The account id to update the pretargeting config for.
             accountId: string,
             // The specific id of the configuration to update.
@@ -1090,12 +1658,40 @@ declare module gapi.client.adexchangebuyer {
     interface ProductsResource {
         // Gets the requested product by id.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The id for the product to get the head revision for.
             productId: string,
         }) : gapi.client.Request<Product>;        
         
         // Gets the requested product.
         search (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The pql query used to query for products.
             pqlQuery?: string,
         }) : gapi.client.Request<GetOffersResponse>;        
@@ -1106,43 +1702,127 @@ declare module gapi.client.adexchangebuyer {
     interface ProposalsResource {
         // Get a proposal given its id
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Id of the proposal to retrieve.
             proposalId: string,
         }) : gapi.client.Request<Proposal>;        
         
         // Create the given list of proposals
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
         }) : gapi.client.Request<CreateOrdersResponse>;        
         
         // Update the given proposal. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The proposal id to update.
             proposalId: string,
             // The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the latest proposal at head revision and retry the update at that revision.
             revisionNumber: string,
-            // The proposed action to take on the proposal.
+            // The proposed action to take on the proposal. This field is required and it must be set when updating a proposal.
             updateAction: string,
         }) : gapi.client.Request<Proposal>;        
         
         // Search for proposals using pql query
         search (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Query string to retrieve specific proposals.
             pqlQuery?: string,
         }) : gapi.client.Request<GetOrdersResponse>;        
         
         // Update the given proposal to indicate that setup has been completed.
         setupcomplete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The proposal id for which the setup is complete
             proposalId: string,
         }) : gapi.client.Request<void>;        
         
         // Update the given proposal
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The proposal id to update.
             proposalId: string,
             // The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the latest proposal at head revision and retry the update at that revision.
             revisionNumber: string,
-            // The proposed action to take on the proposal.
+            // The proposed action to take on the proposal. This field is required and it must be set when updating a proposal.
             updateAction: string,
         }) : gapi.client.Request<Proposal>;        
         
@@ -1152,6 +1832,20 @@ declare module gapi.client.adexchangebuyer {
     interface PubprofilesResource {
         // Gets the requested publisher profile(s) by publisher accountId.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The accountId of the publisher to get profiles for.
             accountId: number,
         }) : gapi.client.Request<GetPublisherProfilesByAccountIdResponse>;        

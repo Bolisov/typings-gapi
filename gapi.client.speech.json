@@ -1,0 +1,6 @@
+{
+    "versions": {
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.speech-v1",
+        "1-beta1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.speech-v1beta1"
+    }
+}

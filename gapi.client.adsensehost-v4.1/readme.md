@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('adsensehost', 'v4.1', () => {
     // now we can use gapi.client.adsensehost
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,21 +60,21 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use AdSense Host API resources:
 
 ```typescript
-gapi.client.adsensehost.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsensehost.adclients.<method name>({ /* method parameters */ })
+gapi.client.adclients.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsensehost.associationsessions.<method name>({ /* method parameters */ })
+gapi.client.associationsessions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsensehost.customchannels.<method name>({ /* method parameters */ })
+gapi.client.customchannels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsensehost.reports.<method name>({ /* method parameters */ })
+gapi.client.reports.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adsensehost.urlchannels.<method name>({ /* method parameters */ })
+gapi.client.urlchannels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -1,6 +1,5 @@
 {
     "versions": {
-        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.iam-v1",
-        "1-alpha1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.iam-v1alpha1"
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.iam-v1"
     }
 }

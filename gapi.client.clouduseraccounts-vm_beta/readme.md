@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('clouduseraccounts', 'vm_beta', () => {
     // now we can use gapi.client.clouduseraccounts
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,15 +69,15 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Cloud User Accounts API resources:
 
 ```typescript
-gapi.client.clouduseraccounts.globalAccountsOperations.<method name>({ /* method parameters */ })
+gapi.client.globalAccountsOperations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.clouduseraccounts.groups.<method name>({ /* method parameters */ })
+gapi.client.groups.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.clouduseraccounts.linux.<method name>({ /* method parameters */ })
+gapi.client.linux.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.clouduseraccounts.users.<method name>({ /* method parameters */ })
+gapi.client.users.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

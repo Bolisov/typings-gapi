@@ -1,0 +1,5 @@
+{
+    "versions": {
+        "1-alpha": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.oslogin-v1alpha"
+    }
+}

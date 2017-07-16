@@ -1,5 +1,5 @@
 # Typescript typings for Google+ Domains API
-The Google+ API enables developers to build on top of the Google+ platform.
+Builds on top of the Google+ platform for Google Apps Domains.
 For detailed description please check [documentation](https://developers.google.com/+/domains/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('plusDomains', 'v1', () => {
     // now we can use gapi.client.plusDomains
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -88,21 +87,21 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google+ Domains API resources:
 
 ```typescript
-gapi.client.plusDomains.activities.<method name>({ /* method parameters */ })
+gapi.client.activities.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plusDomains.audiences.<method name>({ /* method parameters */ })
+gapi.client.audiences.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plusDomains.circles.<method name>({ /* method parameters */ })
+gapi.client.circles.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plusDomains.comments.<method name>({ /* method parameters */ })
+gapi.client.comments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plusDomains.media.<method name>({ /* method parameters */ })
+gapi.client.media.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.plusDomains.people.<method name>({ /* method parameters */ })
+gapi.client.people.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -1,5 +1,6 @@
 # Typescript typings for Google Cloud Billing API
-Retrieves Google Developers Console billing accounts and associates them with projects.
+Allows developers to manage billing for their Google Cloud Platform projects
+    programmatically.
 For detailed description please check [documentation](https://cloud.google.com/billing/).
 
 ## Installing
@@ -34,8 +35,7 @@ Then load api client wrapper:
 gapi.client.load('cloudbilling', 'v1', () => {
     // now we can use gapi.client.cloudbilling
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,9 +61,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Cloud Billing API resources:
 
 ```typescript
-gapi.client.cloudbilling.billingAccounts.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.cloudbilling.projects.<method name>({ /* method parameters */ })
+gapi.client.billingAccounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

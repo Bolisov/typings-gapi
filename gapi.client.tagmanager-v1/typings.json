@@ -1,6 +1,6 @@
 {
     "name": "tagmanager",
-    "main": "gapi.client.tagmanager.d.ts",
+    "main": "gapi.client.tagmanager-v1.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
     "description": "Accesses Tag Manager accounts and containers.",

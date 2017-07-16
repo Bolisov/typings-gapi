@@ -3,7 +3,7 @@
     "main": "gapi.client.taskqueue.d.ts",
     "version": "1-beta2",
     "author": "Bolisov Alexey",
-    "description": "Lets you access a Google App Engine Pull Task Queue over REST.",
+    "description": "Accesses a Google App Engine Pull Task Queue over REST.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

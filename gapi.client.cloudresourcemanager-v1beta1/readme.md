@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('cloudresourcemanager', 'v1beta1', () => {
     // now we can use gapi.client.cloudresourcemanager
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,11 +42,11 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View and manage your data across Google Cloud Platform services
-        'https://www.googleapis.com/auth/cloud-platform',
-    
         // View your data across Google Cloud Platform services
         'https://www.googleapis.com/auth/cloud-platform.read-only',
+    
+        // View and manage your data across Google Cloud Platform services
+        'https://www.googleapis.com/auth/cloud-platform',
     ],
     immediate = true;
 // ...
@@ -64,9 +63,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Cloud Resource Manager API resources:
 
 ```typescript
-gapi.client.cloudresourcemanager.projects.<method name>({ /* method parameters */ })
+gapi.client.organizations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.cloudresourcemanager.organizations.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

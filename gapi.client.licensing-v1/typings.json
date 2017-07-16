@@ -3,7 +3,7 @@
     "main": "gapi.client.licensing.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Licensing API to view and manage license for your domain.",
+    "description": "Views and manages licenses for your domain.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

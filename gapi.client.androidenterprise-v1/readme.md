@@ -1,5 +1,5 @@
 # Typescript typings for Google Play EMM API
-Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.
+Manages the deployment of apps to Android for Work users.
 For detailed description please check [documentation](https://developers.google.com/android/work/play/emm-api).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('androidenterprise', 'v1', () => {
     // now we can use gapi.client.androidenterprise
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,42 +60,45 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Play EMM API resources:
 
 ```typescript
-gapi.client.androidenterprise.collections.<method name>({ /* method parameters */ })
+gapi.client.devices.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.collectionviewers.<method name>({ /* method parameters */ })
+gapi.client.enterprises.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.devices.<method name>({ /* method parameters */ })
+gapi.client.entitlements.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.enterprises.<method name>({ /* method parameters */ })
+gapi.client.grouplicenses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.entitlements.<method name>({ /* method parameters */ })
+gapi.client.grouplicenseusers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.grouplicenses.<method name>({ /* method parameters */ })
+gapi.client.installs.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.grouplicenseusers.<method name>({ /* method parameters */ })
+gapi.client.managedconfigurationsfordevice.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.installs.<method name>({ /* method parameters */ })
+gapi.client.managedconfigurationsforuser.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.permissions.<method name>({ /* method parameters */ })
+gapi.client.permissions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.products.<method name>({ /* method parameters */ })
+gapi.client.products.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.storelayoutclusters.<method name>({ /* method parameters */ })
+gapi.client.serviceaccountkeys.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.storelayoutpages.<method name>({ /* method parameters */ })
+gapi.client.storelayoutclusters.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidenterprise.users.<method name>({ /* method parameters */ })
+gapi.client.storelayoutpages.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.users.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

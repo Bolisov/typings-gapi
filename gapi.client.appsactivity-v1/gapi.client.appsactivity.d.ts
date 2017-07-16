@@ -1,4 +1,4 @@
-// Type definitions for Google Google Apps Activity API v1
+// Type definitions for Google G Suite Activity API v1
 // Project: https://developers.google.com/google-apps/activity/
 // Definitions by: Bolisov Alexey
 
@@ -103,6 +103,8 @@ declare module gapi.client.appsactivity {
     interface User {
         // A boolean which indicates whether the specified User was deleted. If true, name, photo and permission_id will be omitted.
         isDeleted?: boolean,
+        // Whether the user is the authenticated user.
+        isMe?: boolean,
         // The displayable name of the user.
         name?: string,
         // The permission ID associated with this user. Equivalent to the Drive API's permission ID for this user, returned as part of the Drive Permissions resource.
@@ -114,6 +116,20 @@ declare module gapi.client.appsactivity {
     interface ActivitiesResource {
         // Returns a list of activities visible to the current logged in user. Visible activities are determined by the visiblity settings of the object that was acted on, e.g. Drive files a user can see. An activity is a record of past events. Multiple events may be merged if they are similar. A request is scoped to activities from a given Google service using the source parameter.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Identifies the Drive folder containing the items for which to return activities.
             drive.ancestorId?: string,
             // Identifies the Drive item to return activities for.

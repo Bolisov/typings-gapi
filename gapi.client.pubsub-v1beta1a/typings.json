@@ -3,7 +3,7 @@
     "main": "gapi.client.pubsub-v1beta1a.d.ts",
     "version": "1-beta1a",
     "author": "Bolisov Alexey",
-    "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
+    "description": "Provides reliable, many-to-many, asynchronous messaging between applications.\n",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

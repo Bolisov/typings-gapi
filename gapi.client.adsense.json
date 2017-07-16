@@ -1,6 +1,5 @@
 {
     "versions": {
-        "1.2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.adsense-v1.2",
         "1.3": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.adsense-v1.3",
         "1.4": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.adsense-v1.4"
     }

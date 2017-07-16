@@ -1,0 +1,14 @@
+{
+    "name": "monitoring",
+    "main": "gapi.client.monitoring.d.ts",
+    "version": "3",
+    "author": "Bolisov Alexey",
+    "description": "Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a Stackdriver account, with a few exceptions as noted on the individual method pages.",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

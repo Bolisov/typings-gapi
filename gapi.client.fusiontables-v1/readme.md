@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('fusiontables', 'v1', () => {
     // now we can use gapi.client.fusiontables
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,21 +63,21 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Fusion Tables API resources:
 
 ```typescript
-gapi.client.fusiontables.column.<method name>({ /* method parameters */ })
+gapi.client.column.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.fusiontables.query.<method name>({ /* method parameters */ })
+gapi.client.query.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.fusiontables.style.<method name>({ /* method parameters */ })
+gapi.client.style.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.fusiontables.table.<method name>({ /* method parameters */ })
+gapi.client.table.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.fusiontables.task.<method name>({ /* method parameters */ })
+gapi.client.task.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.fusiontables.template.<method name>({ /* method parameters */ })
+gapi.client.template.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

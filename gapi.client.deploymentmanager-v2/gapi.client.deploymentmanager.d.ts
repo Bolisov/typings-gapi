@@ -6,6 +6,62 @@
 
 declare module gapi.client.deploymentmanager {
     
+    interface AuditConfig {
+        // The configuration for logging of each type of permission.
+        auditLogConfigs?: AuditLogConfig[],        
+        // 
+        exemptedMembers?: string[],        
+        // Specifies a service that will be enabled for audit logging. For example, `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices` is a special value that covers all services.
+        service?: string,
+    }
+    
+    interface AuditLogConfig {
+        // Specifies the identities that do not cause logging for this type of permission. Follows the same format of [Binding.members][].
+        exemptedMembers?: string[],        
+        // The log type that this config enables.
+        logType?: string,
+    }
+    
+    interface Binding {
+        // The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently. This field is GOOGLE_INTERNAL.
+        condition?: Expr,
+        // Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:
+        // 
+        // * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
+        // 
+        // * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
+        // 
+        // * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
+        // 
+        // 
+        // 
+        // * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
+        // 
+        // * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
+        // 
+        // 
+        // 
+        // * `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.
+        members?: string[],        
+        // Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+        role?: string,
+    }
+    
+    interface Condition {
+        // Trusted attributes supplied by the IAM system.
+        iam?: string,
+        // An operator to apply the subject with.
+        op?: string,
+        // Trusted attributes discharged by the service.
+        svc?: string,
+        // Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.
+        sys?: string,
+        // DEPRECATED. Use 'values' instead.
+        value?: string,
+        // The objects of the condition. This is mutually exclusive with 'value'.
+        values?: string[],        
+    }
+    
     interface ConfigFile {
         // The contents of the file.
         content?: string,
@@ -30,6 +86,8 @@ declare module gapi.client.deploymentmanager {
         name?: string,
         // [Output Only] The Operation that most recently ran, or is currently running, on this deployment.
         operation?: Operation,
+        // [Output Only] Self link for the deployment.
+        selfLink?: string,
         // [Input Only] The parameters that define your deployment, including the deployment configuration and relevant templates.
         target?: TargetConfiguration,
         // [Output Only] If Deployment Manager is currently updating or previewing an update to this deployment, the updated configuration appears here.
@@ -44,6 +102,8 @@ declare module gapi.client.deploymentmanager {
     }
     
     interface DeploymentUpdate {
+        // [Output Only] An optional user-provided description of the deployment after the current update has been applied.
+        description?: string,
         // [Output Only] Map of labels; provided by the client when the resource is created or updated. Specifically: Label keys must be between 1 and 63 characters long and must conform to the following regular expression: [a-z]([-a-z0-9]*[a-z0-9])? Label values must be between 0 and 63 characters long and must conform to the regular expression ([a-z]([-a-z0-9]*[a-z0-9])?)?
         labels?: DeploymentUpdateLabelEntry[],        
         // [Output Only] URL of the manifest representing the update configuration of this deployment.
@@ -78,11 +138,43 @@ declare module gapi.client.deploymentmanager {
         fingerprint?: string,
     }
     
+    interface Expr {
+        // An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
+        description?: string,
+        // Textual representation of an expression in Common Expression Language syntax.
+        // 
+        // The application context of the containing message determines which well-known feature set of CEL is supported.
+        expression?: string,
+        // An optional string indicating the location of the expression for error reporting, e.g. a file name and a position in the file.
+        location?: string,
+        // An optional title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.
+        title?: string,
+    }
+    
     interface ImportFile {
         // The contents of the file.
         content?: string,
         // The name of the file.
         name?: string,
+    }
+    
+    interface LogConfig {
+        // Cloud audit options.
+        cloudAudit?: LogConfigCloudAuditOptions,
+        // Counter options.
+        counter?: LogConfigCounterOptions,
+    }
+    
+    interface LogConfigCloudAuditOptions {
+        // The log_name to populate in the Cloud Audit Record.
+        logName?: string,
+    }
+    
+    interface LogConfigCounterOptions {
+        // The field value to attribute.
+        field?: string,
+        // The metric to update.
+        metric?: string,
     }
     
     interface Manifest {
@@ -114,7 +206,7 @@ declare module gapi.client.deploymentmanager {
     interface Operation {
         // [Output Only] Reserved for future use.
         clientOperationId?: string,
-        // [Output Only] Creation timestamp in RFC3339 text format.
+        // [Deprecated] This field is deprecated.
         creationTimestamp?: string,
         // [Output Only] A textual description of the operation, which is set when the operation is created.
         description?: string,
@@ -140,7 +232,7 @@ declare module gapi.client.deploymentmanager {
         id?: string,
         // [Output Only] The time that this operation was requested. This value is in RFC3339 text format.
         insertTime?: string,
-        // [Output Only] Type of the resource. Always compute#operation for operation resources.
+        // [Output Only] Type of the resource. Always compute#operation for Operation resources.
         kind?: string,
         // [Output Only] Name of the resource.
         name?: string,
@@ -160,7 +252,7 @@ declare module gapi.client.deploymentmanager {
         statusMessage?: string,
         // [Output Only] The unique target ID, which identifies a specific incarnation of the target resource.
         targetId?: string,
-        // [Output Only] The URL of the resource that the operation modifies.
+        // [Output Only] The URL of the resource that the operation modifies. For operations related to creating a snapshot, this points to the persistent disk that the snapshot was created from.
         targetLink?: string,
         // [Output Only] User who requested the operation, for example: user@example.com.
         user?: string,
@@ -190,7 +282,26 @@ declare module gapi.client.deploymentmanager {
         operations?: Operation[],        
     }
     
+    interface Policy {
+        // Specifies cloud audit logging configuration for this policy.
+        auditConfigs?: AuditConfig[],        
+        // Associates a list of `members` to a `role`. `bindings` with no members will result in an error.
+        bindings?: Binding[],        
+        // `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy.
+        // 
+        // If no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten blindly.
+        etag?: string,
+        // 
+        iamOwned?: boolean,
+        // If more than one rule is specified, the rules are applied in the following manner: - All matching LOG rules are always applied. - If any DENY/DENY_WITH_LOG rule matches, permission is denied. Logging will be applied if one or more matching rule requires logging. - Otherwise, if any ALLOW/ALLOW_WITH_LOG rule matches, permission is granted. Logging will be applied if one or more matching rule requires logging. - Otherwise, if no rule applies, permission is denied.
+        rules?: Rule[],        
+        // Version of the `Policy`. The default version is 0.
+        version?: number,
+    }
+    
     interface Resource {
+        // The Access Control Policy set on this resource.
+        accessControl?: ResourceAccessControl,
         // [Output Only] The evaluated properties of the resource with references expanded. Returned as serialized YAML.
         finalProperties?: string,
         // [Output Only] Unique identifier for the resource; defined by the server.
@@ -203,7 +314,7 @@ declare module gapi.client.deploymentmanager {
         name?: string,
         // [Output Only] The current properties of the resource before any references have been filled in. Returned as serialized YAML.
         properties?: string,
-        // [Output Only] The type of the resource, for example compute.v1.instance, or replicaPools.v1beta2.instanceGroupManager.
+        // [Output Only] The type of the resource, for example compute.v1.instance, or cloudfunctions.v1beta1.function.
         type?: string,
         // [Output Only] If Deployment Manager is currently updating or previewing an update to this resource, the updated configuration appears here.
         update?: ResourceUpdate,
@@ -228,7 +339,14 @@ declare module gapi.client.deploymentmanager {
         }[],        
     }
     
+    interface ResourceAccessControl {
+        // The GCP IAM Policy to set on the resource.
+        gcpIamPolicy?: string,
+    }
+    
     interface ResourceUpdate {
+        // The Access Control Policy to set on this resource after updating the resource itself.
+        accessControl?: ResourceAccessControl,
         // [Output Only] If errors are generated during update of the resource, this field will be populated.
         error?: {        
             // [Output Only] The array of errors encountered while processing this operation.
@@ -275,11 +393,38 @@ declare module gapi.client.deploymentmanager {
         resources?: Resource[],        
     }
     
+    interface Rule {
+        // Required
+        action?: string,
+        // Additional restrictions that must be met
+        conditions?: Condition[],        
+        // Human-readable description of the rule.
+        description?: string,
+        // If one or more 'in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.
+        ins?: string[],        
+        // The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.
+        logConfigs?: LogConfig[],        
+        // If one or more 'not_in' clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in none of the entries.
+        notIns?: string[],        
+        // A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
+        permissions?: string[],        
+    }
+    
     interface TargetConfiguration {
         // The configuration to use for this deployment.
         config?: ConfigFile,
         // Specifies any files to import for this configuration. This can be used to import templates or other files. For example, you might import a text file in order to use the file in a template.
         imports?: ImportFile[],        
+    }
+    
+    interface TestPermissionsRequest {
+        // The set of permissions to check for the 'resource'. Permissions with wildcards (such as '*' or 'storage.*') are not allowed.
+        permissions?: string[],        
+    }
+    
+    interface TestPermissionsResponse {
+        // A subset of `TestPermissionsRequest.permissions` that the caller is allowed.
+        permissions?: string[],        
     }
     
     interface Type {
@@ -289,6 +434,8 @@ declare module gapi.client.deploymentmanager {
         insertTime?: string,
         // Name of the type.
         name?: string,
+        // [Output Only] The Operation that most recently ran, or is currently running, on this type.
+        operation?: Operation,
         // [Output Only] Self link for the type.
         selfLink?: string,
     }
@@ -303,6 +450,20 @@ declare module gapi.client.deploymentmanager {
     interface DeploymentsResource {
         // Cancels and removes the preview currently associated with the deployment.
         cancelPreview (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
             // The project ID for this request.
@@ -311,6 +472,22 @@ declare module gapi.client.deploymentmanager {
         
         // Deletes a deployment and all of the resources in the deployment.
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Sets the policy to use for deleting resources.
+            deletePolicy?: string,
             // The name of the deployment for this request.
             deployment: string,
             // The project ID for this request.
@@ -319,14 +496,64 @@ declare module gapi.client.deploymentmanager {
         
         // Gets information about a specific deployment.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
             // The project ID for this request.
             project: string,
         }) : gapi.client.Request<Deployment>;        
         
+        // Gets the access control policy for a resource. May be empty if no such policy or resource exists.
+        getIamPolicy (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Project ID for this request.
+            project: string,
+            // Name of the resource for this request.
+            resource: string,
+        }) : gapi.client.Request<Policy>;        
+        
         // Creates a deployment and all of the resources described by the deployment manifest.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // If set to true, creates a deployment and creates "shell" resources but does not actually instantiate these resources. This allows you to preview what your deployment looks like. After previewing a deployment, you can deploy your resources by making a request with the update() method or you can use the cancelPreview() method to cancel the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.
             preview?: boolean,
             // The project ID for this request.
@@ -335,18 +562,38 @@ declare module gapi.client.deploymentmanager {
         
         // Lists all deployments for a given project.
         list (request: {        
-            // Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.
             // 
             // The field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.
             // 
-            // For example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.
+            // For example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.
             // 
-            // Compute Engine Beta API Only: If you use filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. In particular, use filtering on nested fields to take advantage of instance labels to organize and filter results based on label values.
+            // You can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.
             // 
-            // The Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
+            // To filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
             filter?: string,
-            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.
+            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
             maxResults?: number,
+            // Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.
+            // 
+            // You can also sort results in descending order based on the creation timestamp using orderBy="creationTimestamp desc". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.
+            // 
+            // Currently, only sorting by name or creationTimestamp desc is supported.
+            orderBy?: string,
             // Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.
             pageToken?: string,
             // The project ID for this request.
@@ -355,6 +602,20 @@ declare module gapi.client.deploymentmanager {
         
         // Updates a deployment and all of the resources described by the deployment manifest. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Sets the policy to use for creating new resources.
             createPolicy?: string,
             // Sets the policy to use for deleting resources.
@@ -367,16 +628,88 @@ declare module gapi.client.deploymentmanager {
             project: string,
         }) : gapi.client.Request<Operation>;        
         
+        // Sets the access control policy on the specified resource. Replaces any existing policy.
+        setIamPolicy (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Project ID for this request.
+            project: string,
+            // Name of the resource for this request.
+            resource: string,
+        }) : gapi.client.Request<Policy>;        
+        
         // Stops an ongoing operation. This does not roll back any work that has already been completed, but prevents any new work from being started.
         stop (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
             // The project ID for this request.
             project: string,
         }) : gapi.client.Request<Operation>;        
         
+        // Returns permissions that a caller has on the specified resource.
+        testIamPermissions (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Project ID for this request.
+            project: string,
+            // Name of the resource for this request.
+            resource: string,
+        }) : gapi.client.Request<TestPermissionsResponse>;        
+        
         // Updates a deployment and all of the resources described by the deployment manifest.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Sets the policy to use for creating new resources.
             createPolicy?: string,
             // Sets the policy to use for deleting resources.
@@ -395,6 +728,20 @@ declare module gapi.client.deploymentmanager {
     interface ManifestsResource {
         // Gets information about a specific manifest.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
             // The name of the manifest for this request.
@@ -405,20 +752,40 @@ declare module gapi.client.deploymentmanager {
         
         // Lists all manifests for a given deployment.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
-            // Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.
+            // Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.
             // 
             // The field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.
             // 
-            // For example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.
+            // For example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.
             // 
-            // Compute Engine Beta API Only: If you use filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. In particular, use filtering on nested fields to take advantage of instance labels to organize and filter results based on label values.
+            // You can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.
             // 
-            // The Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
+            // To filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
             filter?: string,
-            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.
+            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
             maxResults?: number,
+            // Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.
+            // 
+            // You can also sort results in descending order based on the creation timestamp using orderBy="creationTimestamp desc". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.
+            // 
+            // Currently, only sorting by name or creationTimestamp desc is supported.
+            orderBy?: string,
             // Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.
             pageToken?: string,
             // The project ID for this request.
@@ -431,6 +798,20 @@ declare module gapi.client.deploymentmanager {
     interface OperationsResource {
         // Gets information about a specific operation.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the operation for this request.
             operation: string,
             // The project ID for this request.
@@ -439,18 +820,38 @@ declare module gapi.client.deploymentmanager {
         
         // Lists all operations for a project.
         list (request: {        
-            // Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.
             // 
             // The field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.
             // 
-            // For example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.
+            // For example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.
             // 
-            // Compute Engine Beta API Only: If you use filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. In particular, use filtering on nested fields to take advantage of instance labels to organize and filter results based on label values.
+            // You can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.
             // 
-            // The Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
+            // To filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
             filter?: string,
-            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.
+            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
             maxResults?: number,
+            // Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.
+            // 
+            // You can also sort results in descending order based on the creation timestamp using orderBy="creationTimestamp desc". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.
+            // 
+            // Currently, only sorting by name or creationTimestamp desc is supported.
+            orderBy?: string,
             // Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.
             pageToken?: string,
             // The project ID for this request.
@@ -463,6 +864,20 @@ declare module gapi.client.deploymentmanager {
     interface ResourcesResource {
         // Gets information about a single resource.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
             // The project ID for this request.
@@ -473,20 +888,40 @@ declare module gapi.client.deploymentmanager {
         
         // Lists all resources in a given deployment.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // The name of the deployment for this request.
             deployment: string,
-            // Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.
+            // Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.
             // 
             // The field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.
             // 
-            // For example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.
+            // For example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.
             // 
-            // Compute Engine Beta API Only: If you use filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. In particular, use filtering on nested fields to take advantage of instance labels to organize and filter results based on label values.
+            // You can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.
             // 
-            // The Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
+            // To filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
             filter?: string,
-            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.
+            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
             maxResults?: number,
+            // Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.
+            // 
+            // You can also sort results in descending order based on the creation timestamp using orderBy="creationTimestamp desc". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.
+            // 
+            // Currently, only sorting by name or creationTimestamp desc is supported.
+            orderBy?: string,
             // Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.
             pageToken?: string,
             // The project ID for this request.
@@ -499,18 +934,38 @@ declare module gapi.client.deploymentmanager {
     interface TypesResource {
         // Lists all resource types for Deployment Manager.
         list (request: {        
-            // Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: field_name comparison_string literal_string.
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
+            // Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.
             // 
             // The field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.
             // 
-            // For example, to filter for instances that do not have a name of example-instance, you would use filter=name ne example-instance.
+            // For example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.
             // 
-            // Compute Engine Beta API Only: If you use filtering in the Beta API, you can also filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. In particular, use filtering on nested fields to take advantage of instance labels to organize and filter results based on label values.
+            // You can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.
             // 
-            // The Beta API also supports filtering on multiple expressions by providing each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
+            // To filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.
             filter?: string,
-            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests.
+            // The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
             maxResults?: number,
+            // Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.
+            // 
+            // You can also sort results in descending order based on the creation timestamp using orderBy="creationTimestamp desc". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.
+            // 
+            // Currently, only sorting by name or creationTimestamp desc is supported.
+            orderBy?: string,
             // Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.
             pageToken?: string,
             // The project ID for this request.

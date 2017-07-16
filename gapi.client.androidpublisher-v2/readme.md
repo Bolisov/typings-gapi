@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('androidpublisher', 'v2', () => {
     // now we can use gapi.client.androidpublisher
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,15 +60,18 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Play Developer API resources:
 
 ```typescript
-gapi.client.androidpublisher.edits.<method name>({ /* method parameters */ })
+gapi.client.edits.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidpublisher.entitlements.<method name>({ /* method parameters */ })
+gapi.client.entitlements.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidpublisher.inappproducts.<method name>({ /* method parameters */ })
+gapi.client.inappproducts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.androidpublisher.purchases.<method name>({ /* method parameters */ })
+gapi.client.purchases.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.reviews.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

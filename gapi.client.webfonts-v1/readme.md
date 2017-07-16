@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('webfonts', 'v1', () => {
     // now we can use gapi.client.webfonts
     // ... 
-});
-```
+});```
 
 
 
 After that you can use Google Fonts Developer API resources:
 
 ```typescript
-gapi.client.webfonts.webfonts.<method name>({ /* method parameters */ })
+gapi.client.webfonts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

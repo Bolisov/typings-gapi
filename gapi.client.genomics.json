@@ -1,7 +1,6 @@
 {
     "versions": {
         "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.genomics-v1",
-        "1-beta2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.genomics-v1beta2",
         "1-alpha2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.genomics-v1alpha2"
     }
 }

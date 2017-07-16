@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('analytics', 'v3', () => {
     // now we can use gapi.client.analytics
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -76,15 +75,15 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Analytics API resources:
 
 ```typescript
-gapi.client.analytics.data.<method name>({ /* method parameters */ })
+gapi.client.data.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.analytics.management.<method name>({ /* method parameters */ })
+gapi.client.management.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.analytics.metadata.<method name>({ /* method parameters */ })
+gapi.client.metadata.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.analytics.provisioning.<method name>({ /* method parameters */ })
+gapi.client.provisioning.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

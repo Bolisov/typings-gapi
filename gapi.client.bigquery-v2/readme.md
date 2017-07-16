@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('bigquery', 'v2', () => {
     // now we can use gapi.client.bigquery
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -79,18 +78,18 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use BigQuery API resources:
 
 ```typescript
-gapi.client.bigquery.datasets.<method name>({ /* method parameters */ })
+gapi.client.datasets.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.bigquery.jobs.<method name>({ /* method parameters */ })
+gapi.client.jobs.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.bigquery.projects.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.bigquery.tabledata.<method name>({ /* method parameters */ })
+gapi.client.tabledata.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.bigquery.tables.<method name>({ /* method parameters */ })
+gapi.client.tables.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

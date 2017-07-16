@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('storage', 'v1beta2', () => {
     // now we can use gapi.client.storage
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -67,21 +66,21 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Cloud Storage JSON API resources:
 
 ```typescript
-gapi.client.storage.bucketAccessControls.<method name>({ /* method parameters */ })
+gapi.client.bucketAccessControls.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storage.buckets.<method name>({ /* method parameters */ })
+gapi.client.buckets.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storage.channels.<method name>({ /* method parameters */ })
+gapi.client.channels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storage.defaultObjectAccessControls.<method name>({ /* method parameters */ })
+gapi.client.defaultObjectAccessControls.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storage.objectAccessControls.<method name>({ /* method parameters */ })
+gapi.client.objectAccessControls.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storage.objects.<method name>({ /* method parameters */ })
+gapi.client.objects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

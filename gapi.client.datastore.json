@@ -1,6 +1,6 @@
 {
     "versions": {
-        "1-beta1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.datastore-v1beta1",
-        "1-beta2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.datastore-v1beta2"
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.datastore-v1",
+        "1-beta3": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.datastore-v1beta3"
     }
 }

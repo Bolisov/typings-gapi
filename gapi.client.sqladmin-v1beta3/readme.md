@@ -1,5 +1,5 @@
 # Typescript typings for Cloud SQL Administration API
-API for Cloud SQL database instance management.
+Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.
 For detailed description please check [documentation](https://cloud.google.com/sql/docs/reference/latest).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('sqladmin', 'v1beta3', () => {
     // now we can use gapi.client.sqladmin
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,21 +63,21 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Cloud SQL Administration API resources:
 
 ```typescript
-gapi.client.sqladmin.backupRuns.<method name>({ /* method parameters */ })
+gapi.client.backupRuns.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.sqladmin.flags.<method name>({ /* method parameters */ })
+gapi.client.flags.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.sqladmin.instances.<method name>({ /* method parameters */ })
+gapi.client.instances.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.sqladmin.operations.<method name>({ /* method parameters */ })
+gapi.client.operations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.sqladmin.sslCerts.<method name>({ /* method parameters */ })
+gapi.client.sslCerts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.sqladmin.tiers.<method name>({ /* method parameters */ })
+gapi.client.tiers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

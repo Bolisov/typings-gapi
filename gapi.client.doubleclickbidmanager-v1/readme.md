@@ -34,23 +34,41 @@ Then load api client wrapper:
 gapi.client.load('doubleclickbidmanager', 'v1', () => {
     // now we can use gapi.client.doubleclickbidmanager
     // ... 
-});
+});```
+
+Don't forget to authenticate your client before sending any request to resources:
+```typescript
+
+// declare client_id registered in Google Developers Console
+var client_id = '',
+    scope = [     
+        // View and manage your reports in DoubleClick Bid Manager
+        'https://www.googleapis.com/auth/doubleclickbidmanager',
+    ],
+    immediate = true;
+// ...
+
+gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }, authResult => {
+    if (authResult && !authResult.error) {
+        /* handle succesfull authorization */
+    } else {
+        /* handle authorization error */
+    }
+});            
 ```
-
-
 
 After that you can use DoubleClick Bid Manager API resources:
 
 ```typescript
-gapi.client.doubleclickbidmanager.lineitems.<method name>({ /* method parameters */ })
+gapi.client.lineitems.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.doubleclickbidmanager.queries.<method name>({ /* method parameters */ })
+gapi.client.queries.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.doubleclickbidmanager.reports.<method name>({ /* method parameters */ })
+gapi.client.reports.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.doubleclickbidmanager.rubicon.<method name>({ /* method parameters */ })
+gapi.client.sdf.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

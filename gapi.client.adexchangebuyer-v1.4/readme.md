@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('adexchangebuyer', 'v1.4', () => {
     // now we can use gapi.client.adexchangebuyer
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,39 +60,39 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Ad Exchange Buyer API resources:
 
 ```typescript
-gapi.client.adexchangebuyer.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.billingInfo.<method name>({ /* method parameters */ })
+gapi.client.billingInfo.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.budget.<method name>({ /* method parameters */ })
+gapi.client.budget.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.creatives.<method name>({ /* method parameters */ })
+gapi.client.creatives.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.marketplacedeals.<method name>({ /* method parameters */ })
+gapi.client.marketplacedeals.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.marketplacenotes.<method name>({ /* method parameters */ })
+gapi.client.marketplacenotes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.marketplaceprivateauction.<method name>({ /* method parameters */ })
+gapi.client.marketplaceprivateauction.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.performanceReport.<method name>({ /* method parameters */ })
+gapi.client.performanceReport.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.pretargetingConfig.<method name>({ /* method parameters */ })
+gapi.client.pretargetingConfig.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.products.<method name>({ /* method parameters */ })
+gapi.client.products.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.proposals.<method name>({ /* method parameters */ })
+gapi.client.proposals.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.adexchangebuyer.pubprofiles.<method name>({ /* method parameters */ })
+gapi.client.pubprofiles.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

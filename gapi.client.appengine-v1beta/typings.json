@@ -1,0 +1,14 @@
+{
+    "name": "appengine",
+    "main": "gapi.client.appengine-v1beta.d.ts",
+    "version": "1-beta",
+    "author": "Bolisov Alexey",
+    "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

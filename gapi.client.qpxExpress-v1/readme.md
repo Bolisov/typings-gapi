@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('qpxExpress', 'v1', () => {
     // now we can use gapi.client.qpxExpress
     // ... 
-});
-```
+});```
 
 
 
 After that you can use QPX Express API resources:
 
 ```typescript
-gapi.client.qpxExpress.trips.<method name>({ /* method parameters */ })
+gapi.client.trips.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

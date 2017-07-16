@@ -17,7 +17,7 @@ declare module gapi.client.bigquery {
         qualifierEncoded?: string,
         // 
         qualifierString?: string,
-        // [Optional] The type to convert the value in cells of this column. The values are expected to be encoded using HBase Bytes.toBytes function when using the BINARY encoding value. Following BigQuery types are allowed (case-sensitive) - BYTES STRING INTEGER FLOAT BOOLEAN Defaut type is BYTES. 'type' can also be set at the column family level. However, the setting at this level takes precedence if 'type' is set at both levels.
+        // [Optional] The type to convert the value in cells of this column. The values are expected to be encoded using HBase Bytes.toBytes function when using the BINARY encoding value. Following BigQuery types are allowed (case-sensitive) - BYTES STRING INTEGER FLOAT BOOLEAN Default type is BYTES. 'type' can also be set at the column family level. However, the setting at this level takes precedence if 'type' is set at both levels.
         type?: string,
     }
     
@@ -30,7 +30,7 @@ declare module gapi.client.bigquery {
         familyId?: string,
         // [Optional] If this is set only the latest version of value are exposed for all columns in this column family. This can be overridden for a specific column by listing that column in 'columns' and specifying a different setting for that column.
         onlyReadLatest?: boolean,
-        // [Optional] The type to convert the value in cells of this column family. The values are expected to be encoded using HBase Bytes.toBytes function when using the BINARY encoding value. Following BigQuery types are allowed (case-sensitive) - BYTES STRING INTEGER FLOAT BOOLEAN Defaut type is BYTES. This can be overridden for a specific column by listing that column in 'columns' and specifying a type for it.
+        // [Optional] The type to convert the value in cells of this column family. The values are expected to be encoded using HBase Bytes.toBytes function when using the BINARY encoding value. Following BigQuery types are allowed (case-sensitive) - BYTES STRING INTEGER FLOAT BOOLEAN Default type is BYTES. This can be overridden for a specific column by listing that column in 'columns' and specifying a type for it.
         type?: string,
     }
     
@@ -39,6 +39,8 @@ declare module gapi.client.bigquery {
         columnFamilies?: BigtableColumnFamily[],        
         // [Optional] If field is true, then the column families that are not specified in columnFamilies list are not exposed in the table schema. Otherwise, they are read with BYTES type values. The default value is false.
         ignoreUnspecifiedColumnFamilies?: boolean,
+        // [Optional] If field is true, then the rowkey column families will be read and converted to string. Otherwise they are read with BYTES type values and users need to manually cast them with CAST if necessary. The default value is false.
+        readRowkeyAsString?: boolean,
     }
     
     interface CsvOptions {
@@ -53,7 +55,7 @@ declare module gapi.client.bigquery {
         // [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true.
         quote?: string,
         // [Optional] The number of rows at the top of a CSV file that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped.
-        skipLeadingRows?: number,
+        skipLeadingRows?: string,
     }
     
     interface Dataset {
@@ -76,7 +78,7 @@ declare module gapi.client.bigquery {
         creationTime?: string,
         // [Required] A reference that identifies the dataset.
         datasetReference?: DatasetReference,
-        // [Experimental] The default lifetime of all tables in the dataset, in milliseconds. The minimum value is 3600000 milliseconds (one hour). Once this property is set, all newly-created tables in the dataset will have an expirationTime property set to the creation time plus the value in this property, and changing the value will only affect new tables, not existing ones. When the expirationTime for a given table is reached, that table will be deleted automatically. If a table's expirationTime is modified or removed before the table expires, or if you provide an explicit expirationTime when creating a table, that value takes precedence over the default expiration time indicated by this property.
+        // [Optional] The default lifetime of all tables in the dataset, in milliseconds. The minimum value is 3600000 milliseconds (one hour). Once this property is set, all newly-created tables in the dataset will have an expirationTime property set to the creation time plus the value in this property, and changing the value will only affect new tables, not existing ones. When the expirationTime for a given table is reached, that table will be deleted automatically. If a table's expirationTime is modified or removed before the table expires, or if you provide an explicit expirationTime when creating a table, that value takes precedence over the default expiration time indicated by this property.
         defaultTableExpirationMs?: string,
         // [Optional] A user-friendly description of the dataset.
         description?: string,
@@ -88,9 +90,11 @@ declare module gapi.client.bigquery {
         id?: string,
         // [Output-only] The resource type.
         kind?: string,
+        // The labels associated with this dataset. You can use these to organize and group your datasets. You can set this property when inserting or updating a dataset. See Labeling Datasets for more information.
+        labels?: any,
         // [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch.
         lastModifiedTime?: string,
-        // [Experimental] The geographic location where the dataset should reside. Possible values include EU and US. The default value is US.
+        // The geographic location where the dataset should reside. Possible values include EU and US. The default value is US.
         location?: string,
         // [Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource.
         selfLink?: string,
@@ -107,6 +111,8 @@ declare module gapi.client.bigquery {
             id?: string,
             // The resource type. This property always returns the value "bigquery#dataset".
             kind?: string,
+            // The labels associated with this dataset. You can use these to organize and group your datasets.
+            labels?: any,
         }[],        
         // A hash value of the results page. You can use this property to determine if the page has changed since the last request.
         etag?: string,
@@ -151,6 +157,8 @@ declare module gapi.client.bigquery {
         recordsRead?: string,
         // Number of records written by the stage.
         recordsWritten?: string,
+        // Current status for the stage.
+        status?: string,
         // List of operations within the stage in dependency order (approximately chronological).
         steps?: ExplainQueryStep[],        
         // Relative amount of time the average shard spent waiting to be scheduled.
@@ -171,7 +179,7 @@ declare module gapi.client.bigquery {
     }
     
     interface ExternalDataConfiguration {
-        // [Experimental] Try to detect schema and format options automatically. Any option specified explicitly will be honored.
+        // Try to detect schema and format options automatically. Any option specified explicitly will be honored.
         autodetect?: boolean,
         // [Optional] Additional options if sourceFormat is set to BIGTABLE.
         bigtableOptions?: BigtableOptions,
@@ -179,22 +187,24 @@ declare module gapi.client.bigquery {
         compression?: string,
         // Additional properties to set if sourceFormat is set to CSV.
         csvOptions?: CsvOptions,
+        // [Optional] Additional options if sourceFormat is set to GOOGLE_SHEETS.
+        googleSheetsOptions?: GoogleSheetsOptions,
         // [Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Bigtable: This setting is ignored. Google Cloud Datastore backups: This setting is ignored. Avro: This setting is ignored.
         ignoreUnknownValues?: boolean,
         // [Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Bigtable, Google Cloud Datastore backups and Avro formats.
         maxBadRecords?: number,
         // [Optional] The schema for the data. Schema is required for CSV and JSON formats. Schema is disallowed for Google Cloud Bigtable, Cloud Datastore backups, and Avro formats.
         schema?: TableSchema,
-        // [Required] The data format. For CSV files, specify "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro files, specify "AVRO". For Google Cloud Datastore backups, specify "DATASTORE_BACKUP". [Experimental] For Google Cloud Bigtable, specify "BIGTABLE". Please note that reading from Google Cloud Bigtable is experimental and has to be enabled for your project. Please contact Google Cloud Support to enable this for your project.
+        // [Required] The data format. For CSV files, specify "CSV". For Google sheets, specify "GOOGLE_SHEETS". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro files, specify "AVRO". For Google Cloud Datastore backups, specify "DATASTORE_BACKUP". [Beta] For Google Cloud Bigtable, specify "BIGTABLE".
         sourceFormat?: string,
-        // [Required] The fully-qualified URIs that point to your data in Google Cloud. For Google Cloud Storage URIs: Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs. For Google Cloud Bigtable URIs: Exactly one URI can be specified and it has be a fully specified and valid HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore backups, exactly one URI can be specified, and it must end with '.backup_info'. Also, the '*' wildcard character is not allowed.
+        // [Required] The fully-qualified URIs that point to your data in Google Cloud. For Google Cloud Storage URIs: Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources. For Google Cloud Bigtable URIs: Exactly one URI can be specified and it has be a fully specified and valid HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore backups, exactly one URI can be specified, and it must end with '.backup_info'. Also, the '*' wildcard character is not allowed.
         sourceUris?: string[],        
     }
     
     interface GetQueryResultsResponse {
         // Whether the query result was fetched from the query cache.
         cacheHit?: boolean,
-        // [Output-only] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful.
+        // [Output-only] The first errors or warnings encountered during the running of the job. The final message includes the number of errors that caused the process to stop. Errors here do not necessarily mean that the job has completed or was unsuccessful.
         errors?: ErrorProto[],        
         // A hash of this response.
         etag?: string,
@@ -204,6 +214,8 @@ declare module gapi.client.bigquery {
         jobReference?: JobReference,
         // The resource type of the response.
         kind?: string,
+        // [Output-only] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.
+        numDmlAffectedRows?: string,
         // A token used for paging results.
         pageToken?: string,
         // An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. Present only when the query completes successfully.
@@ -214,6 +226,11 @@ declare module gapi.client.bigquery {
         totalBytesProcessed?: string,
         // The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. Present only when the query completes successfully.
         totalRows?: string,
+    }
+    
+    interface GoogleSheetsOptions {
+        // [Optional] The number of rows at the top of a sheet that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows that should be skipped. When autodetect is on, behavior is the following: * skipLeadingRows unspecified - Autodetect tries to detect headers in the first row. If they are not detected, the row is read as data. Otherwise data is read starting from the second row. * skipLeadingRows is 0 - Instructs autodetect that there are no headers and data should be read starting from the first row. * skipLeadingRows = N > 0 - Autodetect skips N-1 rows and tries to detect headers in row N. If headers are not detected, row N is just skipped. Otherwise row N is used to extract column names for the detected schema.
+        skipLeadingRows?: string,
     }
     
     interface Job {
@@ -251,6 +268,8 @@ declare module gapi.client.bigquery {
         dryRun?: boolean,
         // [Pick one] Configures an extract job.
         extract?: JobConfigurationExtract,
+        // [Experimental] The labels associated with this job. You can use these to organize and group your jobs. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.
+        labels?: any,
         // [Pick one] Configures a load job.
         load?: JobConfigurationLoad,
         // [Pick one] Configures a query job.
@@ -279,6 +298,8 @@ declare module gapi.client.bigquery {
         allowJaggedRows?: boolean,
         // Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false.
         allowQuotedNewlines?: boolean,
+        // Indicates if we should automatically infer the options and schema for CSV and JSON sources.
+        autodetect?: boolean,
         // [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.
         createDisposition?: string,
         // [Required] The destination table to load the data into.
@@ -291,7 +312,9 @@ declare module gapi.client.bigquery {
         ignoreUnknownValues?: boolean,
         // [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid.
         maxBadRecords?: number,
-        // [Experimental] If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result.
+        // [Optional] Specifies a string that represents a null value in a CSV file. For example, if you specify "\N", BigQuery interprets "\N" as a null value when loading a CSV file. The default value is the empty string. If you set this property to a custom value, BigQuery throws an error if an empty string is present for all data types except for STRING and BYTE. For STRING and BYTE columns, BigQuery interprets the empty string as an empty value.
+        nullMarker?: string,
+        // If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result.
         projectionFields?: string[],        
         // [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true.
         quote?: string,
@@ -301,44 +324,54 @@ declare module gapi.client.bigquery {
         schemaInline?: string,
         // [Deprecated] The format of the schemaInline property.
         schemaInlineFormat?: string,
+        // [Experimental] Allows the schema of the desitination table to be updated as a side effect of the load job. Schema update options are supported in two cases: when writeDisposition is WRITE_APPEND; when writeDisposition is WRITE_TRUNCATE and the destination table is a partition of a table, specified by partition decorators. For normal tables, WRITE_TRUNCATE will always overwrite the schema. One or more of the following values are specified: ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema. ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original schema to nullable.
+        schemaUpdateOptions?: string[],        
         // [Optional] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped.
         skipLeadingRows?: number,
         // [Optional] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro, specify "AVRO". The default value is CSV.
         sourceFormat?: string,
-        // [Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name.
+        // [Required] The fully-qualified URIs that point to your data in Google Cloud. For Google Cloud Storage URIs: Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources. For Google Cloud Bigtable URIs: Exactly one URI can be specified and it has be a fully specified and valid HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore backups: Exactly one URI can be specified, and it must end with '.backup_info'. Also, the '*' wildcard character is not allowed.
         sourceUris?: string[],        
         // [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_APPEND. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion.
         writeDisposition?: string,
     }
     
     interface JobConfigurationQuery {
-        // If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set.
+        // [Optional] If true and query uses legacy SQL dialect, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set. For standard SQL queries, this flag is ignored and large results are always allowed. However, you must still set destinationTable when result size exceeds the allowed maximum response size.
         allowLargeResults?: boolean,
         // [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.
         createDisposition?: string,
         // [Optional] Specifies the default dataset to use for unqualified table names in the query.
         defaultDataset?: DatasetReference,
-        // [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results.
+        // [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. This property must be set for large results that exceed the maximum response size.
         destinationTable?: TableReference,
-        // [Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false.
+        // [Optional] If true and query uses legacy SQL dialect, flattens all nested and repeated fields in the query results. allowLargeResults must be true if this is set to false. For standard SQL queries, this flag is ignored and results are never flattened.
         flattenResults?: boolean,
         // [Optional] Limits the billing tier for this job. Queries that have resource usage beyond this tier will fail (without incurring a charge). If unspecified, this will be set to your project default.
         maximumBillingTier?: number,
+        // [Optional] Limits the bytes billed for this job. Queries that will have bytes billed beyond this limit will fail (without incurring a charge). If unspecified, this will be set to your project default.
+        maximumBytesBilled?: string,
+        // Standard SQL only. Set to POSITIONAL to use positional (?) query parameters or to NAMED to use named (@myparam) query parameters in this query.
+        parameterMode?: string,
         // [Deprecated] This property is deprecated.
         preserveNulls?: boolean,
         // [Optional] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE.
         priority?: string,
-        // [Required] BigQuery SQL query to execute.
+        // [Required] SQL query text to execute. The useLegacySql field can be used to indicate whether the query uses legacy SQL or standard SQL.
         query?: string,
+        // Query parameters for standard SQL queries.
+        queryParameters?: QueryParameter[],        
+        // [Experimental] Allows the schema of the destination table to be updated as a side effect of the query job. Schema update options are supported in two cases: when writeDisposition is WRITE_APPEND; when writeDisposition is WRITE_TRUNCATE and the destination table is a partition of a table, specified by partition decorators. For normal tables, WRITE_TRUNCATE will always overwrite the schema. One or more of the following values are specified: ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema. ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original schema to nullable.
+        schemaUpdateOptions?: string[],        
         // [Optional] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.
         tableDefinitions?: any,
-        // [Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance. When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false.
+        // Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's standard SQL: https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is set to false, the value of flattenResults is ignored; query will be run as if flattenResults is false.
         useLegacySql?: boolean,
         // [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true.
         useQueryCache?: boolean,
-        // [Experimental] Describes user-defined function resources used in the query.
+        // Describes user-defined function resources used in the query.
         userDefinedFunctionResources?: UserDefinedFunctionResource[],        
-        // [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion.
+        // [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data and uses the schema from the query result. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion.
         writeDisposition?: string,
     }
     
@@ -414,17 +447,27 @@ declare module gapi.client.bigquery {
         billingTier?: number,
         // [Output-only] Whether the query result was fetched from the query cache.
         cacheHit?: boolean,
-        // [Output-only, Experimental] Describes execution plan for the query as a list of stages.
+        // [Output-only] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.
+        numDmlAffectedRows?: string,
+        // [Output-only] Describes execution plan for the query.
         queryPlan?: ExplainQueryStage[],        
         // [Output-only, Experimental] Referenced tables for the job. Queries that reference more than 50 tables will not have a complete list.
         referencedTables?: TableReference[],        
+        // [Output-only, Experimental] The schema of the results. Present only for successful dry run of non-legacy SQL queries.
+        schema?: TableSchema,
+        // [Output-only, Experimental] The type of query statement, if valid.
+        statementType?: string,
         // [Output-only] Total bytes billed for the job.
         totalBytesBilled?: string,
         // [Output-only] Total bytes processed for the job.
         totalBytesProcessed?: string,
+        // [Output-only, Experimental] Standard SQL only: list of undeclared query parameters detected during a dry run validation.
+        undeclaredQueryParameters?: QueryParameter[],        
     }
     
     interface JobStatistics3 {
+        // [Output-only] The number of bad records encountered. Note that if the job has failed because of more bad records encountered than the maximum allowed in the load job configuration, then this number can be less than the total number of bad records present in the input data.
+        badRecords?: string,
         // [Output-only] Number of bytes of source data in a load job.
         inputFileBytes?: string,
         // [Output-only] Number of source files in a load job.
@@ -443,7 +486,7 @@ declare module gapi.client.bigquery {
     interface JobStatus {
         // [Output-only] Final error result of the job. If present, indicates that the job has completed and was unsuccessful.
         errorResult?: ErrorProto,
-        // [Output-only] All errors encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful.
+        // [Output-only] The first errors encountered during the running of the job. The final message includes the number of errors that caused the process to stop. Errors here do not necessarily mean that the job has completed or was unsuccessful.
         errors?: ErrorProto[],        
         // [Output-only] Running state of the job.
         state?: string,
@@ -484,6 +527,40 @@ declare module gapi.client.bigquery {
         projectId?: string,
     }
     
+    interface QueryParameter {
+        // [Optional] If unset, this is a positional parameter. Otherwise, should be unique within a query.
+        name?: string,
+        // [Required] The type of this parameter.
+        parameterType?: QueryParameterType,
+        // [Required] The value of this parameter.
+        parameterValue?: QueryParameterValue,
+    }
+    
+    interface QueryParameterType {
+        // [Optional] The type of the array's elements, if this is an array.
+        arrayType?: QueryParameterType,
+        // [Optional] The types of the fields of this struct, in order, if this is a struct.
+        structTypes?: {        
+            // [Optional] Human-oriented description of the field.
+            description?: string,
+            // [Optional] The name of this field.
+            name?: string,
+            // [Required] The type of this field.
+            type?: QueryParameterType,
+        }[],        
+        // [Required] The top level type of this field.
+        type?: string,
+    }
+    
+    interface QueryParameterValue {
+        // [Optional] The array values, if this is an array type.
+        arrayValues?: QueryParameterValue[],        
+        // [Optional] The struct field values, in order of the struct type's declaration.
+        structValues?: any,
+        // [Optional] The value of this value, if a simple scalar type.
+        value?: string,
+    }
+    
     interface QueryRequest {
         // [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'.
         defaultDataset?: DatasetReference,
@@ -493,13 +570,17 @@ declare module gapi.client.bigquery {
         kind?: string,
         // [Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies.
         maxResults?: number,
+        // Standard SQL only. Set to POSITIONAL to use positional (?) query parameters or to NAMED to use named (@myparam) query parameters in this query.
+        parameterMode?: string,
         // [Deprecated] This property is deprecated.
         preserveNulls?: boolean,
         // [Required] A query string, following the BigQuery query syntax, of the query to execute. Example: "SELECT count(f1) FROM [myProjectId:myDatasetId.myTableId]".
         query?: string,
+        // Query parameters for Standard SQL queries.
+        queryParameters?: QueryParameter[],        
         // [Optional] How long to wait for the query to complete, in milliseconds, before the request times out and returns. Note that this is only a timeout for the request, not the query. If the query takes longer to run than the timeout value, the call returns without any results and with the 'jobComplete' flag set to false. You can call GetQueryResults() to wait for the query to complete and read the results. The default value is 10000 milliseconds (10 seconds).
         timeoutMs?: number,
-        // [Experimental] Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's updated SQL dialect with improved standards compliance. When using BigQuery's updated SQL, the values of allowLargeResults and flattenResults are ignored. Queries with useLegacySql set to false will be run as if allowLargeResults is true and flattenResults is false.
+        // Specifies whether to use BigQuery's legacy SQL dialect for this query. The default value is true. If set to false, the query will use BigQuery's standard SQL: https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is set to false, the value of flattenResults is ignored; query will be run as if flattenResults is false.
         useLegacySql?: boolean,
         // [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true.
         useQueryCache?: boolean,
@@ -508,7 +589,7 @@ declare module gapi.client.bigquery {
     interface QueryResponse {
         // Whether the query result was fetched from the query cache.
         cacheHit?: boolean,
-        // [Output-only] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful.
+        // [Output-only] The first errors or warnings encountered during the running of the job. The final message includes the number of errors that caused the process to stop. Errors here do not necessarily mean that the job has completed or was unsuccessful.
         errors?: ErrorProto[],        
         // Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available.
         jobComplete?: boolean,
@@ -516,6 +597,8 @@ declare module gapi.client.bigquery {
         jobReference?: JobReference,
         // The resource type.
         kind?: string,
+        // [Output-only] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.
+        numDmlAffectedRows?: string,
         // A token used for paging results.
         pageToken?: string,
         // An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above.
@@ -554,12 +637,16 @@ declare module gapi.client.bigquery {
         id?: string,
         // [Output-only] The type of the resource.
         kind?: string,
+        // [Experimental] The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.
+        labels?: any,
         // [Output-only] The time when this table was last modified, in milliseconds since the epoch.
         lastModifiedTime?: string,
         // [Output-only] The geographic location where the table resides. This value is inherited from the dataset.
         location?: string,
         // [Output-only] The size of this table in bytes, excluding any data in the streaming buffer.
         numBytes?: string,
+        // [Output-only] The number of bytes in the table that are considered "long-term storage".
+        numLongTermBytes?: string,
         // [Output-only] The number of rows of data in this table, excluding any data in the streaming buffer.
         numRows?: string,
         // [Optional] Describes the schema of this table.
@@ -570,6 +657,8 @@ declare module gapi.client.bigquery {
         streamingBuffer?: Streamingbuffer,
         // [Required] Reference describing the ID of this table.
         tableReference?: TableReference,
+        // [Experimental] If specified, configures time-based partitioning for this table.
+        timePartitioning?: TimePartitioning,
         // [Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. EXTERNAL: A table that references data stored in an external storage system, such as Google Cloud Storage. The default value is TABLE.
         type?: string,
         // [Optional] The view definition.
@@ -625,7 +714,7 @@ declare module gapi.client.bigquery {
     }
     
     interface TableFieldSchema {
-        // [Optional] The field description. The maximum length is 16K characters.
+        // [Optional] The field description. The maximum length is 1,024 characters.
         description?: string,
         // [Optional] Describes the nested schema fields if the type property is set to RECORD.
         fields?: TableFieldSchema[],        
@@ -633,7 +722,7 @@ declare module gapi.client.bigquery {
         mode?: string,
         // [Required] The field name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 128 characters.
         name?: string,
-        // [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema).
+        // [Required] The field data type. Possible values include STRING, BYTES, INTEGER, INT64 (same as INTEGER), FLOAT, FLOAT64 (same as FLOAT), BOOLEAN, BOOL (same as BOOLEAN), TIMESTAMP, DATE, TIME, DATETIME, RECORD (where RECORD indicates that the field contains a nested schema) or STRUCT (same as RECORD).
         type?: string,
     }
     
@@ -652,10 +741,19 @@ declare module gapi.client.bigquery {
             id?: string,
             // The resource type.
             kind?: string,
+            // [Experimental] The labels associated with this table. You can use these to organize and group your tables.
+            labels?: any,
             // A reference uniquely identifying the table.
             tableReference?: TableReference,
+            // [Experimental] The time-based partitioning for this table.
+            timePartitioning?: TimePartitioning,
             // The type of table. Possible values are: TABLE, VIEW.
             type?: string,
+            // Additional details for a view.
+            view?: {            
+                // True if view is defined in legacy SQL dialect, false if in standard SQL.
+                useLegacySql?: boolean,
+            },            
         }[],        
         // The total number of tables in the dataset.
         totalItems?: number,
@@ -680,6 +778,13 @@ declare module gapi.client.bigquery {
         fields?: TableFieldSchema[],        
     }
     
+    interface TimePartitioning {
+        // [Optional] Number of milliseconds for which to keep the storage for a partition.
+        expirationMs?: string,
+        // [Required] The only type supported is DAY, which will generate one partition per day based on data loading time.
+        type?: string,
+    }
+    
     interface UserDefinedFunctionResource {
         // [Pick one] An inline resource that contains code for a user-defined function (UDF). Providing a inline code resource is equivalent to providing a URI for a file containing the same code.
         inlineCode?: string,
@@ -690,13 +795,29 @@ declare module gapi.client.bigquery {
     interface ViewDefinition {
         // [Required] A query that BigQuery executes when the view is referenced.
         query?: string,
-        // [Experimental] Describes user-defined function resources used in the query.
+        // Specifies whether to use BigQuery's legacy SQL for this view. The default value is true. If set to false, the view will use BigQuery's standard SQL: https://cloud.google.com/bigquery/sql-reference/ Queries and views that reference this view must use the same flag value.
+        useLegacySql?: boolean,
+        // Describes user-defined function resources used in the query.
         userDefinedFunctionResources?: UserDefinedFunctionResource[],        
     }
     
     interface DatasetsResource {
         // Deletes the dataset specified by the datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of dataset being deleted
             datasetId: string,
             // If True, delete all the tables in the dataset. If False and the dataset contains tables, the request will fail. Default is False
@@ -707,6 +828,20 @@ declare module gapi.client.bigquery {
         
         // Returns the dataset specified by datasetID.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the requested dataset
             datasetId: string,
             // Project ID of the requested dataset
@@ -715,14 +850,44 @@ declare module gapi.client.bigquery {
         
         // Creates a new empty dataset.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Project ID of the new dataset
             projectId: string,
         }) : gapi.client.Request<Dataset>;        
         
         // Lists all datasets in the specified project to which you have been granted the READER dataset role.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Whether to list all datasets, including hidden ones
             all?: boolean,
+            // An expression for filtering the results of the request by label. The syntax is "labels.<name>[:<value>]". Multiple filters can be ANDed together by connecting with a space. Example: "labels.department:receiving labels.active". See Filtering datasets using labels for details.
+            filter?: string,
             // The maximum number of results to return
             maxResults?: number,
             // Page token, returned by a previous call, to request the next page of results
@@ -733,6 +898,20 @@ declare module gapi.client.bigquery {
         
         // Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the dataset being updated
             datasetId: string,
             // Project ID of the dataset being updated
@@ -741,6 +920,20 @@ declare module gapi.client.bigquery {
         
         // Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the dataset being updated
             datasetId: string,
             // Project ID of the dataset being updated
@@ -753,6 +946,20 @@ declare module gapi.client.bigquery {
     interface JobsResource {
         // Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.
         cancel (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // [Required] Job ID of the job to cancel
             jobId: string,
             // [Required] Project ID of the job to cancel
@@ -761,6 +968,20 @@ declare module gapi.client.bigquery {
         
         // Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // [Required] Job ID of the requested job
             jobId: string,
             // [Required] Project ID of the requested job
@@ -769,6 +990,20 @@ declare module gapi.client.bigquery {
         
         // Retrieves the results of a query job.
         getQueryResults (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // [Required] Job ID of the query job
             jobId: string,
             // Maximum number of results to read
@@ -785,12 +1020,40 @@ declare module gapi.client.bigquery {
         
         // Starts a new asynchronous job. Requires the Can View project role.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Project ID of the project that will be billed for the job
             projectId: string,
         }) : gapi.client.Request<Job>;        
         
         // Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Whether to display jobs owned by all users in the project. Default false
             allUsers?: boolean,
             // Maximum number of results to return
@@ -807,6 +1070,20 @@ declare module gapi.client.bigquery {
         
         // Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout.
         query (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Project ID of the project billed for the query
             projectId: string,
         }) : gapi.client.Request<QueryResponse>;        
@@ -817,6 +1094,20 @@ declare module gapi.client.bigquery {
     interface ProjectsResource {
         // Lists all projects to which you have been granted any project role.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Maximum number of results to return
             maxResults?: number,
             // Page token, returned by a previous call, to request the next page of results
@@ -829,6 +1120,20 @@ declare module gapi.client.bigquery {
     interface TabledataResource {
         // Streams data into BigQuery one record at a time without needing to run a load job. Requires the WRITER dataset role.
         insertAll (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the destination table.
             datasetId: string,
             // Project ID of the destination table.
@@ -839,6 +1144,20 @@ declare module gapi.client.bigquery {
         
         // Retrieves table data from a specified set of rows. Requires the READER dataset role.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the table to read
             datasetId: string,
             // Maximum number of results to return
@@ -847,6 +1166,8 @@ declare module gapi.client.bigquery {
             pageToken?: string,
             // Project ID of the table to read
             projectId: string,
+            // List of fields to return (comma-separated). If unspecified, all fields are returned
+            selectedFields?: string,
             // Zero-based index of the starting row to read
             startIndex?: string,
             // Table ID of the table to read
@@ -859,6 +1180,20 @@ declare module gapi.client.bigquery {
     interface TablesResource {
         // Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted.
         delete (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the table to delete
             datasetId: string,
             // Project ID of the table to delete
@@ -869,16 +1204,46 @@ declare module gapi.client.bigquery {
         
         // Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table.
         get (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the requested table
             datasetId: string,
             // Project ID of the requested table
             projectId: string,
+            // List of fields to return (comma-separated). If unspecified, all fields are returned
+            selectedFields?: string,
             // Table ID of the requested table
             tableId: string,
         }) : gapi.client.Request<Table>;        
         
         // Creates a new, empty table in the dataset.
         insert (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the new table
             datasetId: string,
             // Project ID of the new table
@@ -887,6 +1252,20 @@ declare module gapi.client.bigquery {
         
         // Lists all tables in the specified dataset. Requires the READER dataset role.
         list (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the tables to list
             datasetId: string,
             // Maximum number of results to return
@@ -899,6 +1278,20 @@ declare module gapi.client.bigquery {
         
         // Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.
         patch (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the table to update
             datasetId: string,
             // Project ID of the table to update
@@ -909,6 +1302,20 @@ declare module gapi.client.bigquery {
         
         // Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.
         update (request: {        
+            // Data format for the response.
+            alt?: string,
+            // Selector specifying which fields to include in a partial response.
+            fields?: string,
+            // API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.
+            key?: string,
+            // OAuth 2.0 token for the current user.
+            oauth_token?: string,
+            // Returns response with indentations and line breaks.
+            prettyPrint?: boolean,
+            // Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
+            quotaUser?: string,
+            // IP address of the site where the request originates. Use this if you want to enforce per-user limits.
+            userIp?: string,
             // Dataset ID of the table to update
             datasetId: string,
             // Project ID of the table to update

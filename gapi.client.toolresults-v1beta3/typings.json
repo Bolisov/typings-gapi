@@ -3,7 +3,7 @@
     "main": "gapi.client.toolresults.d.ts",
     "version": "1-beta3",
     "author": "Bolisov Alexey",
-    "description": "Read and publish results from Cloud Test Lab.",
+    "description": "Reads and publishes results from Firebase Test Lab.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

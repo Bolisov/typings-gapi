@@ -1,5 +1,6 @@
 # Typescript typings for Google Cloud Pub/Sub API
 Provides reliable, many-to-many, asynchronous messaging between applications.
+
 For detailed description please check [documentation](https://cloud.google.com/pubsub/docs).
 
 ## Installing
@@ -34,8 +35,7 @@ Then load api client wrapper:
 gapi.client.load('pubsub', 'v1beta2', () => {
     // now we can use gapi.client.pubsub
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,11 +43,11 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View and manage your data across Google Cloud Platform services
-        'https://www.googleapis.com/auth/cloud-platform',
-    
         // View and manage Pub/Sub topics and subscriptions
         'https://www.googleapis.com/auth/pubsub',
+    
+        // View and manage your data across Google Cloud Platform services
+        'https://www.googleapis.com/auth/cloud-platform',
     ],
     immediate = true;
 // ...
@@ -64,6 +64,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Cloud Pub/Sub API resources:
 
 ```typescript
-gapi.client.pubsub.projects.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

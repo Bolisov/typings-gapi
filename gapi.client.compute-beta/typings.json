@@ -2,7 +2,7 @@
     "name": "compute",
     "main": "gapi.client.compute-beta.d.ts",
     "author": "Bolisov Alexey",
-    "description": "API for the Google Compute Engine service.",
+    "description": "Creates and runs virtual machines on Google Cloud Platform.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

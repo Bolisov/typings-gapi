@@ -1,5 +1,5 @@
 # Typescript typings for APIs Discovery Service
-Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API.
+Provides information about other Google APIs, such as what APIs are available, the resource, and method details for each API.
 For detailed description please check [documentation](https://developers.google.com/discovery/).
 
 ## Installing
@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('discovery', 'v1', () => {
     // now we can use gapi.client.discovery
     // ... 
-});
-```
+});```
 
 
 
 After that you can use APIs Discovery Service resources:
 
 ```typescript
-gapi.client.discovery.apis.<method name>({ /* method parameters */ })
+gapi.client.apis.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

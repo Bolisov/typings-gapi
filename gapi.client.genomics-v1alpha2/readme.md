@@ -1,6 +1,6 @@
 # Typescript typings for Genomics API
-Stores, processes, explores and shares genomic data. This API implements the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.
-For detailed description please check [documentation](https://cloud.google.com/genomics/).
+Upload, process, query, and search Genomics data in the cloud.
+For detailed description please check [documentation](https://cloud.google.com/genomics).
 
 ## Installing
 
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('genomics', 'v1alpha2', () => {
     // now we can use gapi.client.genomics
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,6 +42,9 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
+        // View and manage your Google Compute Engine resources
+        'https://www.googleapis.com/auth/compute',
+    
         // View and manage your data across Google Cloud Platform services
         'https://www.googleapis.com/auth/cloud-platform',
     
@@ -64,9 +66,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Genomics API resources:
 
 ```typescript
-gapi.client.genomics.operations.<method name>({ /* method parameters */ })
+gapi.client.operations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.genomics.pipelines.<method name>({ /* method parameters */ })
+gapi.client.pipelines.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

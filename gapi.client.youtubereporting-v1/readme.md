@@ -1,5 +1,5 @@
 # Typescript typings for YouTube Reporting API
-Schedules reporting jobs and downloads the resulting bulk data reports about YouTube channels, videos, etc. in the form of CSV files.
+Schedules reporting jobs containing your YouTube Analytics data and downloads the resulting bulk data reports in the form of CSV files.
 For detailed description please check [documentation](https://developers.google.com/youtube/reporting/v1/reports/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('youtubereporting', 'v1', () => {
     // now we can use gapi.client.youtubereporting
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,11 +42,11 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View monetary and non-monetary YouTube Analytics reports for your YouTube content
-        'https://www.googleapis.com/auth/yt-analytics-monetary.readonly',
-    
         // View YouTube Analytics reports for your YouTube content
         'https://www.googleapis.com/auth/yt-analytics.readonly',
+    
+        // View monetary and non-monetary YouTube Analytics reports for your YouTube content
+        'https://www.googleapis.com/auth/yt-analytics-monetary.readonly',
     ],
     immediate = true;
 // ...
@@ -64,12 +63,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use YouTube Reporting API resources:
 
 ```typescript
-gapi.client.youtubereporting.media.<method name>({ /* method parameters */ })
+gapi.client.media.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtubereporting.reportTypes.<method name>({ /* method parameters */ })
+gapi.client.jobs.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.youtubereporting.jobs.<method name>({ /* method parameters */ })
+gapi.client.reportTypes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

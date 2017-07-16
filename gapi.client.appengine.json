@@ -1,5 +1,8 @@
 {
     "versions": {
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.appengine-v1",
+        "1-alpha": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.appengine-v1alpha",
+        "1-beta": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.appengine-v1beta",
         "1-beta4": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.appengine-v1beta4",
         "1-beta5": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.appengine-v1beta5"
     }

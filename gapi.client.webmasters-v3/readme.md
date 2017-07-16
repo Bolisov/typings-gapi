@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('webmasters', 'v3', () => {
     // now we can use gapi.client.webmasters
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,18 +63,18 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Search Console API resources:
 
 ```typescript
-gapi.client.webmasters.searchanalytics.<method name>({ /* method parameters */ })
+gapi.client.searchanalytics.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.webmasters.sitemaps.<method name>({ /* method parameters */ })
+gapi.client.sitemaps.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.webmasters.sites.<method name>({ /* method parameters */ })
+gapi.client.sites.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.webmasters.urlcrawlerrorscounts.<method name>({ /* method parameters */ })
+gapi.client.urlcrawlerrorscounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.webmasters.urlcrawlerrorssamples.<method name>({ /* method parameters */ })
+gapi.client.urlcrawlerrorssamples.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

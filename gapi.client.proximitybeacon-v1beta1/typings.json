@@ -3,7 +3,7 @@
     "main": "gapi.client.proximitybeacon.d.ts",
     "version": "1-beta1",
     "author": "Bolisov Alexey",
-    "description": "This API provides services to register, manage, index, and search beacons.",
+    "description": "Registers, manages, indexes, and searches beacons.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

@@ -1,5 +1,5 @@
 # Typescript typings for Google Civic Information API
-An API for accessing civic information.
+Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.
 For detailed description please check [documentation](https://developers.google.com/civic-information).
 
 ## Installing
@@ -34,20 +34,19 @@ Then load api client wrapper:
 gapi.client.load('civicinfo', 'v2', () => {
     // now we can use gapi.client.civicinfo
     // ... 
-});
-```
+});```
 
 
 
 After that you can use Google Civic Information API resources:
 
 ```typescript
-gapi.client.civicinfo.divisions.<method name>({ /* method parameters */ })
+gapi.client.divisions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.civicinfo.elections.<method name>({ /* method parameters */ })
+gapi.client.elections.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.civicinfo.representatives.<method name>({ /* method parameters */ })
+gapi.client.representatives.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

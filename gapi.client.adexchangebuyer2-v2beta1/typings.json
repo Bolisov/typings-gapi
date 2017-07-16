@@ -3,7 +3,7 @@
     "main": "gapi.client.adexchangebuyer2.d.ts",
     "version": "2-beta1",
     "author": "Bolisov Alexey",
-    "description": "The Ad Exchange Buyer API II lets you access the latest features for managing Ad Exchange accounts and Real-Time Bidding configurations.",
+    "description": "Accesses the latest features for managing Ad Exchange accounts, Real-Time Bidding configurations and auction metrics, and Marketplace programmatic deals.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

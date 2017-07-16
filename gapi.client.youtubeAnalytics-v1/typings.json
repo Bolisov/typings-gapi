@@ -3,7 +3,7 @@
     "main": "gapi.client.youtubeAnalytics.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Retrieves your YouTube Analytics reports.",
+    "description": "Retrieves your YouTube Analytics data.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

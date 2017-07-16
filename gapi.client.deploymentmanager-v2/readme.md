@@ -1,5 +1,5 @@
 # Typescript typings for Google Cloud Deployment Manager API
-The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.
+Declares, configures, and deploys complex solutions on Google Cloud Platform.
 For detailed description please check [documentation](https://cloud.google.com/deployment-manager/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('deploymentmanager', 'v2', () => {
     // now we can use gapi.client.deploymentmanager
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -70,18 +69,18 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Cloud Deployment Manager API resources:
 
 ```typescript
-gapi.client.deploymentmanager.deployments.<method name>({ /* method parameters */ })
+gapi.client.deployments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.deploymentmanager.manifests.<method name>({ /* method parameters */ })
+gapi.client.manifests.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.deploymentmanager.operations.<method name>({ /* method parameters */ })
+gapi.client.operations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.deploymentmanager.resources.<method name>({ /* method parameters */ })
+gapi.client.resources.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.deploymentmanager.types.<method name>({ /* method parameters */ })
+gapi.client.types.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

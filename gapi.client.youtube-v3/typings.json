@@ -3,7 +3,7 @@
     "main": "gapi.client.youtube.d.ts",
     "version": "3",
     "author": "Bolisov Alexey",
-    "description": "Programmatic access to YouTube features.",
+    "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('storagetransfer', 'v1', () => {
     // now we can use gapi.client.storagetransfer
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,15 +60,12 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Storage Transfer API resources:
 
 ```typescript
-gapi.client.storagetransfer.googleServiceAccounts.<method name>({ /* method parameters */ })
+gapi.client.googleServiceAccounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storagetransfer.v1.<method name>({ /* method parameters */ })
+gapi.client.transferOperations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.storagetransfer.transferJobs.<method name>({ /* method parameters */ })
-    .then(response => { /* handling response */ });
-
-gapi.client.storagetransfer.transferOperations.<method name>({ /* method parameters */ })
+gapi.client.transferJobs.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

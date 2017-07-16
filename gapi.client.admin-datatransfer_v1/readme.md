@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('admin', 'datatransfer_v1', () => {
     // now we can use gapi.client.admin
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,9 +63,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Admin Data Transfer API resources:
 
 ```typescript
-gapi.client.admin.applications.<method name>({ /* method parameters */ })
+gapi.client.applications.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.transfers.<method name>({ /* method parameters */ })
+gapi.client.transfers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

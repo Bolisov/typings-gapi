@@ -3,7 +3,7 @@
     "main": "gapi.client.replicapool.d.ts",
     "version": "1-beta2",
     "author": "Bolisov Alexey",
-    "description": "The Google Compute Engine Instance Group Manager API provides groups of homogenous Compute Engine Instances.",
+    "description": "[Deprecated. Please use Instance Group Manager in Compute API] Provides groups of homogenous Compute Engine instances.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

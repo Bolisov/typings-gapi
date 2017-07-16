@@ -1,5 +1,5 @@
 # Typescript typings for Knowledge Graph Search API
-Knowledge Graph Search API allows developers to search the Google Knowledge Graph for entities.
+Searches the Google Knowledge Graph for entities.
 For detailed description please check [documentation](https://developers.google.com/knowledge-graph/).
 
 ## Installing
@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('kgsearch', 'v1', () => {
     // now we can use gapi.client.kgsearch
     // ... 
-});
-```
+});```
 
 
 
 After that you can use Knowledge Graph Search API resources:
 
 ```typescript
-gapi.client.kgsearch.entities.<method name>({ /* method parameters */ })
+gapi.client.entities.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

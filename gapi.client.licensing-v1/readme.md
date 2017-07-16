@@ -1,5 +1,5 @@
 # Typescript typings for Enterprise License Manager API
-Licensing API to view and manage license for your domain.
+Views and manages licenses for your domain.
 For detailed description please check [documentation](https://developers.google.com/google-apps/licensing/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('licensing', 'v1', () => {
     // now we can use gapi.client.licensing
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,7 +42,7 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
-        // View and manage Google Apps licenses for your domain
+        // View and manage G Suite licenses for your domain
         'https://www.googleapis.com/auth/apps.licensing',
     ],
     immediate = true;
@@ -61,6 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Enterprise License Manager API resources:
 
 ```typescript
-gapi.client.licensing.licenseAssignments.<method name>({ /* method parameters */ })
+gapi.client.licenseAssignments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

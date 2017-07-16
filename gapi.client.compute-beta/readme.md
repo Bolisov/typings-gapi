@@ -1,5 +1,5 @@
 # Typescript typings for Compute Engine API
-API for the Google Compute Engine service.
+Creates and runs virtual machines on Google Cloud Platform.
 For detailed description please check [documentation](https://developers.google.com/compute/docs/reference/latest/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('compute', 'beta', () => {
     // now we can use gapi.client.compute
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -76,114 +75,144 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Compute Engine API resources:
 
 ```typescript
-gapi.client.compute.addresses.<method name>({ /* method parameters */ })
+gapi.client.acceleratorTypes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.autoscalers.<method name>({ /* method parameters */ })
+gapi.client.addresses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.backendServices.<method name>({ /* method parameters */ })
+gapi.client.autoscalers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.diskTypes.<method name>({ /* method parameters */ })
+gapi.client.backendBuckets.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.disks.<method name>({ /* method parameters */ })
+gapi.client.backendServices.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.firewalls.<method name>({ /* method parameters */ })
+gapi.client.diskTypes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.forwardingRules.<method name>({ /* method parameters */ })
+gapi.client.disks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.globalAddresses.<method name>({ /* method parameters */ })
+gapi.client.firewalls.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.globalForwardingRules.<method name>({ /* method parameters */ })
+gapi.client.forwardingRules.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.globalOperations.<method name>({ /* method parameters */ })
+gapi.client.globalAddresses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.httpHealthChecks.<method name>({ /* method parameters */ })
+gapi.client.globalForwardingRules.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.httpsHealthChecks.<method name>({ /* method parameters */ })
+gapi.client.globalOperations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.images.<method name>({ /* method parameters */ })
+gapi.client.healthChecks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.instanceGroupManagers.<method name>({ /* method parameters */ })
+gapi.client.httpHealthChecks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.instanceGroups.<method name>({ /* method parameters */ })
+gapi.client.httpsHealthChecks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.instanceTemplates.<method name>({ /* method parameters */ })
+gapi.client.images.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.instances.<method name>({ /* method parameters */ })
+gapi.client.instanceGroupManagers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.licenses.<method name>({ /* method parameters */ })
+gapi.client.instanceGroups.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.machineTypes.<method name>({ /* method parameters */ })
+gapi.client.instanceTemplates.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.networks.<method name>({ /* method parameters */ })
+gapi.client.instances.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.projects.<method name>({ /* method parameters */ })
+gapi.client.licenses.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.regionOperations.<method name>({ /* method parameters */ })
+gapi.client.machineTypes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.regions.<method name>({ /* method parameters */ })
+gapi.client.networks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.routers.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.routes.<method name>({ /* method parameters */ })
+gapi.client.regionAutoscalers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.snapshots.<method name>({ /* method parameters */ })
+gapi.client.regionBackendServices.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.sslCertificates.<method name>({ /* method parameters */ })
+gapi.client.regionCommitments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.subnetworks.<method name>({ /* method parameters */ })
+gapi.client.regionInstanceGroupManagers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.targetHttpProxies.<method name>({ /* method parameters */ })
+gapi.client.regionInstanceGroups.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.targetHttpsProxies.<method name>({ /* method parameters */ })
+gapi.client.regionOperations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.targetInstances.<method name>({ /* method parameters */ })
+gapi.client.regions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.targetPools.<method name>({ /* method parameters */ })
+gapi.client.routers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.targetVpnGateways.<method name>({ /* method parameters */ })
+gapi.client.routes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.urlMaps.<method name>({ /* method parameters */ })
+gapi.client.snapshots.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.vpnTunnels.<method name>({ /* method parameters */ })
+gapi.client.sslCertificates.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.zoneOperations.<method name>({ /* method parameters */ })
+gapi.client.subnetworks.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.compute.zones.<method name>({ /* method parameters */ })
+gapi.client.targetHttpProxies.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.targetHttpsProxies.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.targetInstances.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.targetPools.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.targetSslProxies.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.targetTcpProxies.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.targetVpnGateways.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.urlMaps.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.vpnTunnels.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.zoneOperations.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.zones.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

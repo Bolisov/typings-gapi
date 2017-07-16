@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('resourceviews', 'v1beta1', () => {
     // now we can use gapi.client.resourceviews
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -76,9 +75,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Resource Views API resources:
 
 ```typescript
-gapi.client.resourceviews.regionViews.<method name>({ /* method parameters */ })
+gapi.client.regionViews.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.resourceviews.zoneViews.<method name>({ /* method parameters */ })
+gapi.client.zoneViews.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

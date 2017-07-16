@@ -3,7 +3,7 @@
     "main": "gapi.client.replicapoolupdater.d.ts",
     "version": "1-beta1",
     "author": "Bolisov Alexey",
-    "description": "Updates groups of Compute Engine instances.",
+    "description": "[Deprecated. Please use compute.instanceGroupManagers.update method. replicapoolupdater API will be disabled after December 30th, 2016] Updates groups of Compute Engine instances.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

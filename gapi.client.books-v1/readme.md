@@ -1,5 +1,5 @@
 # Typescript typings for Books API
-Lets you search for books and manage your Google Books library.
+Searches for books and manages your Google Books library.
 For detailed description please check [documentation](https://developers.google.com/books/docs/v1/getting_started).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('books', 'v1', () => {
     // now we can use gapi.client.books
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,39 +60,39 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Books API resources:
 
 ```typescript
-gapi.client.books.bookshelves.<method name>({ /* method parameters */ })
+gapi.client.bookshelves.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.cloudloading.<method name>({ /* method parameters */ })
+gapi.client.cloudloading.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.dictionary.<method name>({ /* method parameters */ })
+gapi.client.dictionary.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.layers.<method name>({ /* method parameters */ })
+gapi.client.layers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.myconfig.<method name>({ /* method parameters */ })
+gapi.client.myconfig.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.mylibrary.<method name>({ /* method parameters */ })
+gapi.client.mylibrary.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.notification.<method name>({ /* method parameters */ })
+gapi.client.notification.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.onboarding.<method name>({ /* method parameters */ })
+gapi.client.onboarding.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.personalizedstream.<method name>({ /* method parameters */ })
+gapi.client.personalizedstream.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.promooffer.<method name>({ /* method parameters */ })
+gapi.client.promooffer.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.series.<method name>({ /* method parameters */ })
+gapi.client.series.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.books.volumes.<method name>({ /* method parameters */ })
+gapi.client.volumes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

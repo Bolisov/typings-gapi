@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('admin', 'directory_v1', () => {
     // now we can use gapi.client.admin
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -139,60 +138,60 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Admin Directory API resources:
 
 ```typescript
-gapi.client.admin.asps.<method name>({ /* method parameters */ })
+gapi.client.asps.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.channels.<method name>({ /* method parameters */ })
+gapi.client.channels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.chromeosdevices.<method name>({ /* method parameters */ })
+gapi.client.chromeosdevices.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.customers.<method name>({ /* method parameters */ })
+gapi.client.customers.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.domainAliases.<method name>({ /* method parameters */ })
+gapi.client.domainAliases.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.domains.<method name>({ /* method parameters */ })
+gapi.client.domains.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.groups.<method name>({ /* method parameters */ })
+gapi.client.groups.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.members.<method name>({ /* method parameters */ })
+gapi.client.members.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.mobiledevices.<method name>({ /* method parameters */ })
+gapi.client.mobiledevices.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.notifications.<method name>({ /* method parameters */ })
+gapi.client.notifications.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.orgunits.<method name>({ /* method parameters */ })
+gapi.client.orgunits.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.privileges.<method name>({ /* method parameters */ })
+gapi.client.privileges.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.resources.<method name>({ /* method parameters */ })
+gapi.client.resources.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.roleAssignments.<method name>({ /* method parameters */ })
+gapi.client.roleAssignments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.roles.<method name>({ /* method parameters */ })
+gapi.client.roles.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.schemas.<method name>({ /* method parameters */ })
+gapi.client.schemas.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.tokens.<method name>({ /* method parameters */ })
+gapi.client.tokens.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.users.<method name>({ /* method parameters */ })
+gapi.client.users.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.admin.verificationCodes.<method name>({ /* method parameters */ })
+gapi.client.verificationCodes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

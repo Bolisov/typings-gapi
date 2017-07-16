@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('calendar', 'v3', () => {
     // now we can use gapi.client.calendar
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,27 +63,27 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Calendar API resources:
 
 ```typescript
-gapi.client.calendar.acl.<method name>({ /* method parameters */ })
+gapi.client.acl.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.calendarList.<method name>({ /* method parameters */ })
+gapi.client.calendarList.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.calendars.<method name>({ /* method parameters */ })
+gapi.client.calendars.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.channels.<method name>({ /* method parameters */ })
+gapi.client.channels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.colors.<method name>({ /* method parameters */ })
+gapi.client.colors.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.events.<method name>({ /* method parameters */ })
+gapi.client.events.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.freebusy.<method name>({ /* method parameters */ })
+gapi.client.freebusy.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.calendar.settings.<method name>({ /* method parameters */ })
+gapi.client.settings.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

@@ -1,6 +1,5 @@
 {
     "versions": {
-        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.reseller-v1",
-        "1-sandbox": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.reseller-v1sandbox"
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.reseller-v1"
     }
 }

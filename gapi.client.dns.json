@@ -1,5 +1,6 @@
 {
     "versions": {
-        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dns-v1"
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dns-v1",
+        "2-beta1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dns-v2beta1"
     }
 }

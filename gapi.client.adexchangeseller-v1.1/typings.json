@@ -3,7 +3,7 @@
     "main": "gapi.client.adexchangeseller-v1.1.d.ts",
     "version": "1.1",
     "author": "Bolisov Alexey",
-    "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
+    "description": "Accesses the inventory of Ad Exchange seller users and generates reports.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

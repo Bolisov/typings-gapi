@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('prediction', 'v1.6', () => {
     // now we can use gapi.client.prediction
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,6 +42,9 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
+        // View and manage your data across Google Cloud Platform services
+        'https://www.googleapis.com/auth/cloud-platform',
+    
         // Manage your data and permissions in Google Cloud Storage
         'https://www.googleapis.com/auth/devstorage.full_control',
     
@@ -70,9 +72,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Prediction API resources:
 
 ```typescript
-gapi.client.prediction.hostedmodels.<method name>({ /* method parameters */ })
+gapi.client.hostedmodels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.prediction.trainedmodels.<method name>({ /* method parameters */ })
+gapi.client.trainedmodels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

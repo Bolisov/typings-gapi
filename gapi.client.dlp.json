@@ -1,0 +1,5 @@
+{
+    "versions": {
+        "2-beta1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.dlp-v2beta1"
+    }
+}

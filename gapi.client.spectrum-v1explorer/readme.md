@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('spectrum', 'v1explorer', () => {
     // now we can use gapi.client.spectrum
     // ... 
-});
-```
+});```
 
 
 
 After that you can use Google Spectrum Database API resources:
 
 ```typescript
-gapi.client.spectrum.paws.<method name>({ /* method parameters */ })
+gapi.client.paws.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

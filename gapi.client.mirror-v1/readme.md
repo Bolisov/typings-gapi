@@ -1,5 +1,5 @@
 # Typescript typings for Google Mirror API
-API for interacting with Glass users via the timeline.
+Interacts with Glass users via the timeline.
 For detailed description please check [documentation](https://developers.google.com/glass).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('mirror', 'v1', () => {
     // now we can use gapi.client.mirror
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -64,21 +63,21 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google Mirror API resources:
 
 ```typescript
-gapi.client.mirror.accounts.<method name>({ /* method parameters */ })
+gapi.client.accounts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.mirror.contacts.<method name>({ /* method parameters */ })
+gapi.client.contacts.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.mirror.locations.<method name>({ /* method parameters */ })
+gapi.client.locations.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.mirror.settings.<method name>({ /* method parameters */ })
+gapi.client.settings.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.mirror.subscriptions.<method name>({ /* method parameters */ })
+gapi.client.subscriptions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.mirror.timeline.<method name>({ /* method parameters */ })
+gapi.client.timeline.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

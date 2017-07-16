@@ -34,14 +34,13 @@ Then load api client wrapper:
 gapi.client.load('pagespeedonline', 'v2', () => {
     // now we can use gapi.client.pagespeedonline
     // ... 
-});
-```
+});```
 
 
 
 After that you can use PageSpeed Insights API resources:
 
 ```typescript
-gapi.client.pagespeedonline.pagespeedapi.<method name>({ /* method parameters */ })
+gapi.client.pagespeedapi.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

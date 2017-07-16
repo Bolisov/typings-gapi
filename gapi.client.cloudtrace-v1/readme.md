@@ -1,6 +1,7 @@
-# Typescript typings for Google Cloud Trace API
-The Cloud Trace API allows you to send traces to and retrieve traces from Google Cloud Trace.
-For detailed description please check [documentation](https://cloud.google.com/tools/cloud-trace).
+# Typescript typings for Stackdriver Trace API
+Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default for all App Engine applications. Data from other applications can be written to Stackdriver Trace for display, reporting, and analysis.
+
+For detailed description please check [documentation](https://cloud.google.com/trace).
 
 ## Installing
 
@@ -14,7 +15,7 @@ Then install typings for *Google API client*:
 typings install gapi.client --save 
 ```
 
-And finally install typings for Google Cloud Trace API:
+And finally install typings for Stackdriver Trace API:
 ```
 typings install gapi.client.cloudtrace --save 
 ```
@@ -34,8 +35,7 @@ Then load api client wrapper:
 gapi.client.load('cloudtrace', 'v1', () => {
     // now we can use gapi.client.cloudtrace
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -43,8 +43,14 @@ Don't forget to authenticate your client before sending any request to resources
 // declare client_id registered in Google Developers Console
 var client_id = '',
     scope = [     
+        // Write Trace data for a project or application
+        'https://www.googleapis.com/auth/trace.append',
+    
         // View and manage your data across Google Cloud Platform services
         'https://www.googleapis.com/auth/cloud-platform',
+    
+        // Read Trace data for a project or application
+        'https://www.googleapis.com/auth/trace.readonly',
     ],
     immediate = true;
 // ...
@@ -58,9 +64,9 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 });            
 ```
 
-After that you can use Google Cloud Trace API resources:
+After that you can use Stackdriver Trace API resources:
 
 ```typescript
-gapi.client.cloudtrace.projects.<method name>({ /* method parameters */ })
+gapi.client.projects.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

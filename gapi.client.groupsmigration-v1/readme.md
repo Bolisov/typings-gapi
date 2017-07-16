@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('groupsmigration', 'v1', () => {
     // now we can use gapi.client.groupsmigration
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,6 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Groups Migration API resources:
 
 ```typescript
-gapi.client.groupsmigration.archive.<method name>({ /* method parameters */ })
+gapi.client.archive.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

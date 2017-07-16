@@ -1,0 +1,14 @@
+{
+    "name": "speech",
+    "main": "gapi.client.speech.d.ts",
+    "version": "1",
+    "author": "Bolisov Alexey",
+    "description": "Converts audio to text by applying powerful neural network models.",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

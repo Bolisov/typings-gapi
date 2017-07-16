@@ -1,5 +1,6 @@
 {
     "versions": {
-        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.cloudtrace-v1"
+        "1": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.cloudtrace-v1",
+        "2": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.cloudtrace-v2"
     }
 }

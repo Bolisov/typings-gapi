@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('content', 'v2sandbox', () => {
     // now we can use gapi.client.content
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,6 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Content API for Shopping resources:
 
 ```typescript
-gapi.client.content.orders.<method name>({ /* method parameters */ })
+gapi.client.orders.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```

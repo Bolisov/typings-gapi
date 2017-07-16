@@ -1,0 +1,14 @@
+{
+    "name": "serviceuser",
+    "main": "gapi.client.serviceuser.d.ts",
+    "version": "1",
+    "author": "Bolisov Alexey",
+    "description": "Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.",
+    "homepage": "https://github.com/bolisov/typings-gapi",
+    "ambient": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "ambientDependencies": {
+        "gapi.client": "github:bolisov/typings-gapi/gapi.client"
+    }
+}

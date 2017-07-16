@@ -3,7 +3,7 @@
     "main": "gapi.client.admin.d.ts",
     "version": "1",
     "author": "Bolisov Alexey",
-    "description": "Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.",
+    "description": "Fetches reports for the administrators of G Suite customers about the usage, collaboration, security, and risk for their users.",
     "homepage": "https://github.com/bolisov/typings-gapi",
     "ambient": true,
     "dependencies": {},

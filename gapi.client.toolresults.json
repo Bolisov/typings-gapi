@@ -1,5 +1,6 @@
 {
     "versions": {
+        "1-beta3firstparty": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.toolresults-v1beta3firstparty",
         "1-beta3": "https://guthub.com/bolisov/typings-gapi/typings/gapi.client.toolresults-v1beta3"
     }
 }

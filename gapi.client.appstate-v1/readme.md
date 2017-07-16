@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('appstate', 'v1', () => {
     // now we can use gapi.client.appstate
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -61,6 +60,6 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Google App State API resources:
 
 ```typescript
-gapi.client.appstate.states.<method name>({ /* method parameters */ })
+gapi.client.states.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```
