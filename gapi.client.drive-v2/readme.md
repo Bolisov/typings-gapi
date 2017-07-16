@@ -1,5 +1,5 @@
 # Typescript typings for Drive API
-The API to interact with Drive.
+Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.
 For detailed description please check [documentation](https://developers.google.com/drive/).
 
 ## Installing
@@ -34,8 +34,7 @@ Then load api client wrapper:
 gapi.client.load('drive', 'v2', () => {
     // now we can use gapi.client.drive
     // ... 
-});
-```
+});```
 
 Don't forget to authenticate your client before sending any request to resources:
 ```typescript
@@ -85,42 +84,45 @@ gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }
 After that you can use Drive API resources:
 
 ```typescript
-gapi.client.drive.about.<method name>({ /* method parameters */ })
+gapi.client.about.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.apps.<method name>({ /* method parameters */ })
+gapi.client.apps.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.changes.<method name>({ /* method parameters */ })
+gapi.client.changes.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.channels.<method name>({ /* method parameters */ })
+gapi.client.channels.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.children.<method name>({ /* method parameters */ })
+gapi.client.children.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.comments.<method name>({ /* method parameters */ })
+gapi.client.comments.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.files.<method name>({ /* method parameters */ })
+gapi.client.files.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.parents.<method name>({ /* method parameters */ })
+gapi.client.parents.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.permissions.<method name>({ /* method parameters */ })
+gapi.client.permissions.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.properties.<method name>({ /* method parameters */ })
+gapi.client.properties.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.realtime.<method name>({ /* method parameters */ })
+gapi.client.realtime.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.replies.<method name>({ /* method parameters */ })
+gapi.client.replies.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 
-gapi.client.drive.revisions.<method name>({ /* method parameters */ })
+gapi.client.revisions.<method name>({ /* method parameters */ })
+    .then(response => { /* handling response */ });
+
+gapi.client.teamdrives.<method name>({ /* method parameters */ })
     .then(response => { /* handling response */ });
 ```
